@@ -1,5 +1,3 @@
-"use strict";
-
 var canvas = document.getElementById("canvas");
 var ctx = canvas.getContext("2d");
 
@@ -8,6 +6,8 @@ const CANVAS_HEIGHT = canvas.height = 600;
 
 const playerImage = new Image();
 playerImage.src = 'js/recursos/naves/nave-jugador.png'
+var jugador = new Nave();
+jugador.img = playerImage;
 
 
 function init () 
@@ -16,7 +16,7 @@ function init ()
     function animate()
     {
         ctx.clearRect(0,0,CANVAS_WIDTH,CANVAS_HEIGHT);
-        ctx.drawImage(playerImage,50,50);
+        ctx.drawImage(jugador.img,50,50);
         requestAnimationFrame(animate);
     }
     animate();

@@ -1,5 +1,11 @@
 class Punto
-{
+{   
+    #x;
+    #y;
+    #vx;
+    #vy;
+    #angulo;
+
     constructor (x0,y0,vx,vy,angulo) 
     {
         this.x = x0 || 50;
@@ -12,45 +18,54 @@ class Punto
     // getters y setters de la posición
     get x ()
     {
-        return this.x;
+        return this.#x;
     }
 
     get y ()
     {
-        return this.y;
+        return this.#y;
     }
 
     set x (xValue)
     {
-        this.x = xValue;
+        this.#x = xValue;
     }
 
     set y (yValue)
     {
-        this.y = yValue;
+        this.#y = yValue;
     }
 
     // getters y setters de la velocidad
     get vx ()
     {
-        return this.vx;
+        return this.#vx;
     }
 
     get vy ()
     {
-        return this.vy;
+        return this.#vy;
     }
 
     set vx (vxValue)
     {
-        this.x = vxValue;
+        this.#vx = vxValue;
     }
 
     set vy (vyValue)
     {
-        this.y = vyValue;
+        this.#vy = vyValue;
     }
     
+    get angulo()
+    {
+        return this.#angulo;
+    }
+
+    set angulo(value)
+    {
+        this.#angulo = value;
+    }
     /**
      * Métodos para desplazamiento del punto
      * Mueve de posición inicial (x,y) a una nueva
