@@ -1,4 +1,4 @@
-class Proyectil extends Punto
+class Projectile extends Point
 {
     #xFinal;
     #yFinal;
@@ -20,9 +20,9 @@ class Proyectil extends Punto
     }
 
 
-    calcularPuntoFinale(){}
+    computeFinalPoint(){}
 
-    impactar(){}
+    impact(){}
 
-    explotar(){}
+    explode(){}
 }

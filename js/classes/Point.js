@@ -1,18 +1,18 @@
-class Punto
+class Point
 {   
     #x;
     #y;
     #vx;
     #vy;
-    #angulo;
+    #angle;
 
-    constructor (x0,y0,vx,vy,angulo) 
+    constructor (x0,y0,vx,vy,angle) 
     {
-        this.x = x0 || 50;
-        this.y = y0 || 50;
-        this.vx = vx || 2;
-        this.vy = vy || 2;
-        this.angulo = angulo || 0;
+        this.#x = x0 || 500;
+        this.#y = y0 || 250;
+        this.#vx = vx || 20;
+        this.#vy = vy || 20;
+        this.#angle = angle || 0;
     }
 
     // getters y setters de la posición
@@ -57,14 +57,14 @@ class Punto
         this.#vy = vyValue;
     }
     
-    get angulo()
+    get angle()
     {
-        return this.#angulo;
+        return this.#angle;
     }
 
-    set angulo(value)
+    set angle(value)
     {
-        this.#angulo = value;
+        this.#angle = value;
     }
     /**
      * Métodos para desplazamiento del punto
@@ -72,23 +72,23 @@ class Punto
      * posición (x +dx, y) o (x,y + dy),
      * según sea el caso 
      */
-    moverArriba ()
+    moveUp ()
     {
-        this.y += -vy;
+        this.#y += -this.#vy;
     }
 
-    moverAbajo ()
+    moveDown ()
     {
-        this.y += vy;
+        this.#y += this.#vy;
     }
-    moverIzquierda ()
+    moveLeft ()
     {
-        this.x += -vx;
+        this.#x += -this.#vx;
     }
 
-    moverDerecha ()
+    moveRight ()
     {
-        this.x += vx;
+        this.#x += this.#vx;
     }
     
 }
