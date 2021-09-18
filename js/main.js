@@ -1,25 +1,26 @@
 "use strict";
 
-var canvas = undefined;
-var ctx = undefined;
+var canvas = document.getElementById("canvas");
+var ctx = canvas.getContext("2d");
 
-function start () {
-    canvas = document.getElementById("canvas");
-    ctx = canvas.getContext("2d");
-mainLoop();
-}
-document.addEventListener('DOMContentLoaded', start);
+const CANVAS_WIDTH = canvas.width = 1000;
+const CANVAS_HEIGHT = canvas.height = 600;
 
-function update () {
-}
+const playerImage = new Image();
+playerImage.src = 'js/recursos/naves/nave-jugador.png'
 
-function draw () {
-}
 
-function mainLoop () {
-    ctx.fillStyle = "blue";
-    ctx.fillRect(0, 0, canvas.width, canvas.height);
-    update();
-    draw();
-    window.setTimeout(mainLoop, 1000 / 60);
+function init () 
+{
+
+    function animate()
+    {
+        ctx.clearRect(0,0,CANVAS_WIDTH,CANVAS_HEIGHT);
+        ctx.drawImage(playerImage,50,50);
+        requestAnimationFrame(animate);
+    }
+    animate();
+
 }
+document.addEventListener('DOMContentLoaded', init);
+
