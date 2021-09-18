@@ -17,7 +17,6 @@ class Ship extends Point
 
     }
 
-
     get fireRate()
     {
         return this.#fireRate;

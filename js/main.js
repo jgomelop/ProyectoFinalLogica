@@ -7,7 +7,7 @@ var animation;
 
 
 const playerImage = new Image();
-playerImage.src = 'js/resources/ships/player_ship.png'
+playerImage.src = 'js/resources/ships/player_ship.png';
 var player = new Ship(CANVAS_WIDTH/2,CANVAS_HEIGHT/2,10,10,0,50);
 player.img = playerImage;
 

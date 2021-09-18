@@ -2,6 +2,7 @@ class Projectile extends Point
 {
     #xFinal;
     #yFinal;
+    
     constructor (x0,y0,vx,vy,angulo) 
     {
         super(x0,y0,vx,vy,angulo);
