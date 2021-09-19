@@ -27,20 +27,13 @@ function init ()
         ctx.save();
         rotateShip();
         draw();
-        
-        //ctx.restore();
+
     }
 
     function draw() {
-        //ctx.translate(CANVAS_WIDTH/2,CANVAS_HEIGHT/2);
-        //ctx.rotate(-player.angle);
-        //ctx.save();
-        //ctx.translate(player.x, player.y);
-        //ctx.rotate(player.angle);
+
         ctx.drawImage(playerImage, player.x, player.y, IMAGE_WIDTH, IMAGE_HEIGHT);
-       // rotateShip();
-        //ctx.restore();
-        //ctx.setTransform(1,0,0,1,0,0)
+
     }
 
     function rotateShip(){
@@ -61,17 +54,10 @@ function init ()
         }
     }
 
-    /*body.addEventListener('click',shoot);
-    function shoot(e){
-        ctx.clearRect(0,0,CANVAS_WIDTH,CANVAS_HEIGHT);
-        //let playerShoot = new Projectile(e.clientX, e.clientY, 0, 0, 0);
-        ctx.drawImage(playerProjectile, e.clientX, e.clientY);
-    }*/
     
     body.addEventListener("keydown", movePlayer);
     function movePlayer(e)
     {
-        //ctx.clearRect(0,0,w,h);
         switch (e.key)
         {
          
