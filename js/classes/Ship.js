@@ -13,17 +13,25 @@ class Ship extends Point
     }
 
     drawShip(ctx){
-        let centerX = this.x - this.scale*this.img.width/2;
-        let centerY = this.y - this.scale*this.img.height/2;
 
         const IMG_WIDTH = this.scale*this.img.width;
         const IMG_HEIGHT = this.scale*this.img.height;
 
+        const drawX0 = this.x - IMG_WIDTH/2;
+        const drawY0 = this.y - IMG_HEIGHT/2;
+
         //ctx.setTransform(1,0,0,1,centerX,centerY);
-        ctx.drawImage(this.img, centerX, centerY,IMG_WIDTH,IMG_HEIGHT); 
+        ctx.drawImage(this.img, drawX0, drawY0,IMG_WIDTH,IMG_HEIGHT); 
     }
 
-    rotateShip(){}
+    rotateShip(ctx,mousePos){
+        const X0 = this.x;
+        const Y0 = this.y;
+        this.angle = Math.atan2(mousePos.y - Y0, mousePos.x - X0);
+        ctx.translate(X0, Y0);
+        ctx.rotate(Math.PI/2 + this.angle);
+        ctx.translate(-X0, -Y0);
+    }
 
     aim(){}
 

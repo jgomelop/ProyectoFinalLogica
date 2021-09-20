@@ -33,7 +33,11 @@ function init ()
         ctx.clearRect(0,0,CANVAS_WIDTH,CANVAS_HEIGHT);
         ctx.setTransform(1,0,0,1,0,0);
         ctx.save();
-        rotateShip();
+
+        if (mousePos){
+            player.rotateShip(ctx,mousePos);
+        }
+        
         draw();
     }
 
@@ -54,10 +58,10 @@ function init ()
 
     function rotateShip(){
         if(mousePos){
-            player.angle = Math.atan2(mousePos.y -(CANVAS_HEIGHT/2), mousePos.x -(CANVAS_WIDTH/2));
-            ctx.translate(CANVAS_WIDTH/2, CANVAS_HEIGHT/2);
-            ctx.rotate(Math.PI/2+player.angle);
-            ctx.translate(-(CANVAS_WIDTH/2), -(CANVAS_HEIGHT/2));    
+            //player.angle = Math.atan2(mousePos.y -(CANVAS_HEIGHT/2), mousePos.x -(CANVAS_WIDTH/2));
+            //ctx.translate(CANVAS_WIDTH/2, CANVAS_HEIGHT/2);
+            //ctx.rotate(Math.PI/2+player.angle);
+            //ctx.translate(-(CANVAS_WIDTH/2), -(CANVAS_HEIGHT/2));   
         }
     }
 
