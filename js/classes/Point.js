@@ -1,11 +1,11 @@
 class Point
 {   
-    constructor (x,y,vx,vy) 
+    constructor (x,y,dx,dy) 
     {
         this.x = x || 500;
         this.y = y || 250;
-        this.vx = vx || 20;
-        this.vy = vy || 20;
+        this.dx = dx || 20;
+        this.dy = dy || 20;
     }
 
     
@@ -17,21 +17,21 @@ class Point
      */
     moveUp ()
     {
-        this.y += -this.vy;
+        this.y += -this.dy;
     }
 
     moveDown ()
     {
-        this.y += this.vy;
+        this.y += this.dy;
     }
     moveLeft ()
     {
-        this.x += -this.vx;
+        this.x += -this.dx;
     }
 
     moveRight ()
     {
-        this.x += this.vx;
+        this.x += this.dx;
     }
     
 }

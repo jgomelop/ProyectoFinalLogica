@@ -20,6 +20,7 @@ var IMAGE_HEIGHT = 50;
 
 var player = new Ship(playerImage,CANVAS_WIDTH/2,CANVAS_HEIGHT/2,10,10);
 const playerBulletImg = new Image();
+playerBulletImg.onload = function(){};
 playerBulletImg.src= 'js/resources/proyectiles/bala-jugador.png';
 
 
@@ -37,7 +38,7 @@ function init ()
         if (mousePos){
             player.rotateShip(ctx,mousePos);
         }
-        
+
         draw();
     }
 
@@ -46,22 +47,16 @@ function init ()
 
         //ctx.drawImage(playerImage, player.x, player.y, IMAGE_WIDTH, IMAGE_HEIGHT);
         player.drawShip(ctx);
+
+        
+        
         // Drawing bullets
         if (playerBullets){
             for (let i = 0; i < playerBullets.length; i++){
                 let bullet = playerBullets[i];
-                bullet.draw(ctx);
+                bullet.drawBullets(ctx);
                 //ctx.drawImage(playerBulletImg, CANVAS_WIDTH/2,CANVAS_HEIGHT/2);
             }
-        }
-    }
-
-    function rotateShip(){
-        if(mousePos){
-            //player.angle = Math.atan2(mousePos.y -(CANVAS_HEIGHT/2), mousePos.x -(CANVAS_WIDTH/2));
-            //ctx.translate(CANVAS_WIDTH/2, CANVAS_HEIGHT/2);
-            //ctx.rotate(Math.PI/2+player.angle);
-            //ctx.translate(-(CANVAS_WIDTH/2), -(CANVAS_HEIGHT/2));   
         }
     }
 
@@ -91,7 +86,7 @@ function init ()
         const xDirection = Math.sign(mousePos.x);
         const yDirection = Math.sign(mousePos.y);
 
-        let bullet = new Projectile(xCenter,yCenter,xDirection*10,yDirection*10);
+        let bullet = new Projectile(playerBulletImg,xCenter,yCenter,xDirection*10,yDirection*10);
         bullet.xFinal = mousePos.x;
         bullet.yFinal = mousePos.y;
 
@@ -128,8 +123,6 @@ function init ()
         }
         update();           
     }
-
-
 }
 document.addEventListener('DOMContentLoaded', init);
 

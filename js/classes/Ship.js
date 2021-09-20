@@ -1,9 +1,9 @@
 class Ship extends Point
 {
 
-    constructor(img,x,y,vx,vy)
+    constructor(img,x,y,dx,dy)
     {
-        super(x,y,vx,vy);
+        super(x,y,dx,dy);
         this.angle = 0;
         this.fireRate = 1;
         this.lifePoints = 20;
@@ -24,19 +24,12 @@ class Ship extends Point
         ctx.drawImage(this.img, drawX0, drawY0,IMG_WIDTH,IMG_HEIGHT); 
     }
 
-    rotateShip(ctx,mousePos){
+    rotateShip(ctx,mousePosition){
         const X0 = this.x;
         const Y0 = this.y;
-        this.angle = Math.atan2(mousePos.y - Y0, mousePos.x - X0);
+        this.angle = Math.atan2(mousePosition.y - Y0, mousePosition.x - X0);
         ctx.translate(X0, Y0);
         ctx.rotate(Math.PI/2 + this.angle);
         ctx.translate(-X0, -Y0);
     }
-
-    aim(){}
-
-    shoot(){}
-
-    explode(){}
-
 }

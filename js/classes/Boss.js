@@ -5,10 +5,5 @@ class Boss extends Ship
         super(x0,y0,vx,vy,angle,PV);
     }
 
-    /**
-     * La nave enemiga se diferencia de la clase Nave principal
-     * en que esta tiene tres 
-     */
-
     
 }

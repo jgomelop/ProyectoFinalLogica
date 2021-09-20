@@ -1,116 +1,45 @@
-class Projectile
+class Projectile extends Point
 {
-    #x0;
-    #y0;
-    #vx;
-    #vy;
-    #angle;
-    #xFinal;
-    #yFinal;
-    #img;
-    
-    constructor (x0,y0,vx,vy,angle) 
-    {       
-        this.#x0 = x0 || 500;
-        this.#y0 = y0 || 250;
-        this.#vx = vx || 20;
-        this.#vy = vy || 20;
-        this.#angle = angle || 0;
-        this.#xFinal = undefined;
-        this.#yFinal = undefined;
-        this.#img = undefined;
-    }
-
-    // getters y setters de la posición
-    get x ()
-    {
-        return this.#x0;
-    }
-
-    get y ()
-    {
-        return this.#y0;
-    }
-
-    set x (xValue)
-    {
-        this.#x0 = xValue;
-    }
-
-    set y (yValue)
-    {
-        this.#y0 = yValue;
-    }
-
-    // getters y setters de la velocidad
-    get vx ()
-    {
-        return this.#vx;
-    }
-
-    get vy ()
-    {
-        return this.#vy;
-    }
-
-    set vx (vxValue)
-    {
-        this.#vx = vxValue;
-    }
-
-    set vy (vyValue)
-    {
-        this.#vy = vyValue;
-    }
-    
-    get angle()
-    {
-        return this.#angle;
-    }
-
-    set angle(value)
-    {
-        this.#angle = value;
+    constructor (img,x,y,dx,dy) 
+    {    
+        super(x,y,dx,dy)
+        this.xFinal = undefined;
+        this.yFinal = undefined;
+        this.img = img;
+        this.scale = 1;
+        this.isAlive = true;
     }
 
 
-    get xFinal ()
-    {
-        return this.#xFinal;
+    drawBullets(ctx){
+        const IMG_WIDTH = this.scale*this.img.width;
+        const IMG_HEIGHT = this.scale*this.img.height;
+
+        const drawX0 = this.x - IMG_WIDTH/2;
+        const drawY0 = this.y - IMG_HEIGHT/2;
+
+        ctx.drawImage(this.img, drawX0, drawY0,IMG_WIDTH,IMG_HEIGHT); 
     }
 
-    get yFinal ()
-    {
-        return this.#yFinal;
+    move(mousePosition){
+
+        this.xFinal = mousePosition.x;
+        this.yFinal = mousePosition.y;
+
+        const xDir = Math.sign(this.xFinal - this.x); // x sign direction
+        const yDir = Math.sign(this.yFinal - this.y); // y sign direction
+
+        this.x += xDir*this.dx;
+        this.y += yDir*this.dy;
     }
 
-    set xFinal (value)
-    {
-        this.#xFinal = value;
+    explode(canvasWidth, canvasHeight){
+        if ((Math.abs(this.x - this.xFinal) == 0) && 
+            (Math.abs(this.y - this.yFinal) == 0)){
+            this.isAlive = false;
+        } 
+        else if ((this.x < 0 || this.x > canvasWidth) || (this.y < 0 || this.y > canvasHeight)){
+            this.isAlive = false;
+        }
     }
-
-    set yFinal (value)
-    {
-        this.#yFinal = value;
-    }
-    
-    get img ()
-    {
-        return this.#img;
-    }
-
-    set img (value)
-    {
-        this.#img = value;
-    }
-
-    draw(ctx){
-        ctx.drawImage(this.#img, this.#x0,this.#y0);
-    }
-
-    computeFinalPoint(){}
-
-    impact(){}
-
-    explode(){}
 }
