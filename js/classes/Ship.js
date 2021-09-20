@@ -1,83 +1,29 @@
 class Ship extends Point
 {
-    #angle;
-    #fireRate
-    #lifePoints;
-    #isAlive;
-    #img;
-    //#endAngle
 
-    constructor(x0,y0,vx,vy,angle,HP)
+    constructor(img,x,y,vx,vy)
     {
-        super(x0,y0,vx,vy,angle);
-        this.#angle = angle ||0;
-       // this.#endAngle= angles||0;
-        this.#fireRate = 1;
-        this.#lifePoints = HP || 20;
-        this.#isAlive = true;
-        this.#img = undefined;
-
+        super(x,y,vx,vy);
+        this.angle = 0;
+        this.fireRate = 1;
+        this.lifePoints = 20;
+        this.isAlive = true;
+        this.img = img;
+        this.scale = .7;
     }
 
-    /*get endAngle()
-    {
-        return this.#endAngle;
+    drawShip(ctx){
+        let centerX = this.x - this.scale*this.img.width/2;
+        let centerY = this.y - this.scale*this.img.height/2;
+
+        const IMG_WIDTH = this.scale*this.img.width;
+        const IMG_HEIGHT = this.scale*this.img.height;
+
+        //ctx.setTransform(1,0,0,1,centerX,centerY);
+        ctx.drawImage(this.img, centerX, centerY,IMG_WIDTH,IMG_HEIGHT); 
     }
 
-    set endAngle(value)
-    {
-        this.#endAngle = value;
-    }*/
-
-    get angle()
-    {
-        return this.#angle;
-    }
-
-    set angle(value)
-    {
-        this.#angle = value;
-    }
-
-    get fireRate()
-    {
-        return this.#fireRate;
-    }
-    
-    set fireRate(value)
-    {
-        this.#fireRate = value;
-    }   
-
-    get lifePoints()
-    {
-        return this.#lifePoints;
-    }
-    
-    set lifePoints(value)
-    {
-        this.#lifePoints = value;
-    }   
-    
-    
-    get isAlive ()
-    {
-        return this.#isAlive;
-    }
-
-    get img ()
-    {
-        return this.#img;
-    }
-
-    set img (newImg)
-    {
-        this.#img = newImg;
-    }
-
-
-
-    rotate(){}
+    rotateShip(){}
 
     aim(){}
 

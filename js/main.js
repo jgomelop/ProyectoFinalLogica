@@ -13,10 +13,12 @@ var mousePos;
  * PLAYER DATA
  */
 const playerImage = new Image();
+playerImage.onload = function(){};
 playerImage.src = 'js/resources/ships/player_ship.png';
 var IMAGE_WIDTH = 50;
 var IMAGE_HEIGHT = 50;
-var player = new Ship(CANVAS_WIDTH/2-IMAGE_WIDTH/2,CANVAS_HEIGHT/2-IMAGE_HEIGHT/2,10,10,0,50);
+
+var player = new Ship(playerImage,CANVAS_WIDTH/2,CANVAS_HEIGHT/2,10,10);
 const playerBulletImg = new Image();
 playerBulletImg.src= 'js/resources/proyectiles/bala-jugador.png';
 
@@ -29,15 +31,17 @@ function init ()
 {   
     function update() {
         ctx.clearRect(0,0,CANVAS_WIDTH,CANVAS_HEIGHT);
+        ctx.setTransform(1,0,0,1,0,0);
         ctx.save();
         rotateShip();
         draw();
     }
 
+
     function draw() {
 
-        ctx.drawImage(playerImage, player.x, player.y, IMAGE_WIDTH, IMAGE_HEIGHT);
-        
+        //ctx.drawImage(playerImage, player.x, player.y, IMAGE_WIDTH, IMAGE_HEIGHT);
+        player.drawShip(ctx);
         // Drawing bullets
         if (playerBullets){
             for (let i = 0; i < playerBullets.length; i++){
