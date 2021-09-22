@@ -1,5 +1,6 @@
 var body = document.getElementById('body');
 var canvas = document.getElementById("canvas");
+var container = document.getElementById("container")
 var ctx = canvas.getContext("2d");
 ctx.save();
 const CANVAS_WIDTH = canvas.width = 1000;
@@ -71,8 +72,8 @@ function init ()
     body.addEventListener('mousemove', mouseCoord);
     function mouseCoord(e){
         mousePos= {
-            x: e.clientX - canvas.offsetLeft,
-            y: e.clientY - canvas.offsetTop,
+            x: e.clientX - container.offsetLeft,
+            y: e.clientY - container.offsetTop,
         }
         return mousePos;
     }

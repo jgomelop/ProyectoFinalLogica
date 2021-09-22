@@ -9,16 +9,23 @@
     background-size: cover;
 }
 
-#canvas{
-    background: url(../js/resources/backgrounds/background-blue.png);
+#container{
+    position: relative;
+    height: 604px;
+    width: 1004px;
     margin-top: 5px;
     margin-left: 170px;
+}
+
+#canvas{
+    background: url(../js/resources/backgrounds/background-blue.png);
+    
     border: 2px solid #555555;
     height: 600px;
     width: 1000px;
     animation: scroll-background 6s linear infinite;
     box-shadow: 0 2px rgba(0, 0, 0, 0);
-    position: relative;
+    position: absolute;
     z-index: -2;  
 }
 
@@ -30,4 +37,8 @@
         background-position-y: 256px;
     }
 
+}
+
+#pause{
+    position: absolute;
 }
