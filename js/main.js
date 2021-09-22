@@ -1,13 +1,11 @@
 var body = document.getElementById('body');
 var canvas = document.getElementById("canvas");
 var ctx = canvas.getContext("2d");
-ctx.save();
 const CANVAS_WIDTH = canvas.width = 1000;
 const CANVAS_HEIGHT = canvas.height = 600;
 
 var animation;
 var mousePos;
-
 
 /**
  * PLAYER DATA
@@ -27,35 +25,28 @@ playerBulletImg.src= 'js/resources/proyectiles/bala-jugador.png';
 // PROJECTILES
 var playerBullets = new Array();
 
-
 function init () 
 {   
     function update() {
         ctx.clearRect(0,0,CANVAS_WIDTH,CANVAS_HEIGHT);
         ctx.setTransform(1,0,0,1,0,0);
-        ctx.save();
 
-        if (mousePos){
-            player.rotateShip(ctx,mousePos);
-        }
+        //if (mousePos){
+        //    player.rotateShip(ctx,mousePos);
+        //}
 
         draw();
     }
 
-
     function draw() {
 
-        //ctx.drawImage(playerImage, player.x, player.y, IMAGE_WIDTH, IMAGE_HEIGHT);
         player.drawShip(ctx);
 
-        
-        
         // Drawing bullets
         if (playerBullets){
             for (let i = 0; i < playerBullets.length; i++){
                 let bullet = playerBullets[i];
                 bullet.drawBullets(ctx);
-                //ctx.drawImage(playerBulletImg, CANVAS_WIDTH/2,CANVAS_HEIGHT/2);
             }
         }
     }
@@ -63,7 +54,6 @@ function init ()
     function animate(){
         animation = requestAnimationFrame(animate);
         update();
-        ctx.restore();
     }
     animate();
 
@@ -80,13 +70,11 @@ function init ()
     body.addEventListener('click', playerShoot);
     function playerShoot(e){
         mousePos = mouseCoord(e);
-        const xCenter = CANVAS_WIDTH/2;
-        const yCenter =  CANVAS_HEIGHT/2;
 
         const xDirection = Math.sign(mousePos.x);
         const yDirection = Math.sign(mousePos.y);
 
-        let bullet = new Projectile(playerBulletImg,xCenter,yCenter,xDirection*10,yDirection*10);
+        let bullet = new Projectile(playerBulletImg,player.x,player.y,xDirection*10,yDirection*10);
         bullet.xFinal = mousePos.x;
         bullet.yFinal = mousePos.y;
 
@@ -95,15 +83,13 @@ function init ()
 
         // pushing bullet to playerBullets array
         playerBullets.push(bullet);
-        console.log(playerBullets.length);
+        console.log(bullet.x,bullet.y);
     }
 
-    
     body.addEventListener("keydown", movePlayer);
     function movePlayer(e){
         switch (e.key)
         {
-         
             case "w" : 
                 player.moveUp();           
                 break;
@@ -118,10 +104,8 @@ function init ()
 
             case "d" :
                 player.moveRight();           
-                break;
-            
-        }
-        update();           
+                break; 
+        }           
     }
 }
 document.addEventListener('DOMContentLoaded', init);

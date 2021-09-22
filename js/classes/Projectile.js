@@ -15,7 +15,6 @@ class Projectile extends Point
         this.#isAlive = true;
     }
 
-
     drawBullets(ctx){
         const IMG_WIDTH = this.#scale*this.#img.width;
         const IMG_HEIGHT = this.#scale*this.#img.height;
@@ -26,16 +25,21 @@ class Projectile extends Point
         ctx.drawImage(this.#img, drawX0, drawY0,IMG_WIDTH,IMG_HEIGHT); 
     }
 
-    move(mousePosition){
-
-        this.#xFinal = mousePosition.x;
-        this.#yFinal = mousePosition.y;
+    move(){
 
         const xDir = Math.sign(this.#xFinal - super.x); // x sign direction
         const yDir = Math.sign(this.#yFinal - super.y); // y sign direction
 
-        super.x += xDir*super.vx;
-        super.y += yDir*super.vy;
+        let xDistance = Math.abs(super.x - this.#xFinal);
+        let yDistance = Math.abs(super.y - this.#yFinal);
+        let distanceToFinalPoint = Math.SQRT2(xDistance*xDistance + yDistance*yDistance)
+        const DIFF_ERROR_RADIOUS = 10;
+
+        while (distanceToFinalPoint > DIFF_ERROR_RADIOUS) {
+            super.x += xDir*super.vx;
+            super.y += yDir*super.vy;
+        }
+        
     }
 
     explode(canvasWidth, canvasHeight){
