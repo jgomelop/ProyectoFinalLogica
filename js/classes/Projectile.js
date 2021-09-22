@@ -1,45 +1,50 @@
 class Projectile extends Point
-{
-    constructor (img,x,y,dx,dy) 
+{   
+    #xFinal;
+    #yFinal;
+    #img;
+    #scale;
+    #isAlive;
+    constructor (img,x,y,vx,vy) 
     {    
-        super(x,y,dx,dy)
-        this.xFinal = undefined;
-        this.yFinal = undefined;
-        this.img = img;
-        this.scale = 1;
-        this.isAlive = true;
+        super(x,y,vx,vy)
+        this.#xFinal = undefined;
+        this.#yFinal = undefined;
+        this.#img = img;
+        this.#scale = 1;
+        this.#isAlive = true;
     }
 
 
     drawBullets(ctx){
-        const IMG_WIDTH = this.scale*this.img.width;
-        const IMG_HEIGHT = this.scale*this.img.height;
+        const IMG_WIDTH = this.#scale*this.#img.width;
+        const IMG_HEIGHT = this.#scale*this.#img.height;
 
-        const drawX0 = this.x - IMG_WIDTH/2;
-        const drawY0 = this.y - IMG_HEIGHT/2;
+        const drawX0 = super.x - IMG_WIDTH/2;
+        const drawY0 = super.y - IMG_HEIGHT/2;
 
-        ctx.drawImage(this.img, drawX0, drawY0,IMG_WIDTH,IMG_HEIGHT); 
+        ctx.drawImage(this.#img, drawX0, drawY0,IMG_WIDTH,IMG_HEIGHT); 
     }
 
     move(mousePosition){
 
-        this.xFinal = mousePosition.x;
-        this.yFinal = mousePosition.y;
+        this.#xFinal = mousePosition.x;
+        this.#yFinal = mousePosition.y;
 
-        const xDir = Math.sign(this.xFinal - this.x); // x sign direction
-        const yDir = Math.sign(this.yFinal - this.y); // y sign direction
+        const xDir = Math.sign(this.#xFinal - super.x); // x sign direction
+        const yDir = Math.sign(this.#yFinal - super.y); // y sign direction
 
-        this.x += xDir*this.dx;
-        this.y += yDir*this.dy;
+        super.x += xDir*super.vx;
+        super.y += yDir*super.vy;
     }
 
     explode(canvasWidth, canvasHeight){
-        if ((Math.abs(this.x - this.xFinal) == 0) && 
-            (Math.abs(this.y - this.yFinal) == 0)){
-            this.isAlive = false;
+        if ((Math.abs(super.x - this.#xFinal) == 0) && 
+            (Math.abs(super.y - this.#yFinal) == 0)){
+            this.#isAlive = false;
         } 
-        else if ((this.x < 0 || this.x > canvasWidth) || (this.y < 0 || this.y > canvasHeight)){
-            this.isAlive = false;
+        else if ((super.x < 0 || super.x > canvasWidth) || (super.y < 0 || super.y > canvasHeight)){
+            this.#isAlive = false;
         }
     }
 }

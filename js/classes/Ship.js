@@ -1,35 +1,72 @@
 class Ship extends Point
 {
-
-    constructor(img,x,y,dx,dy)
+    #angle; 
+    #fireRate;
+    #lifePoints;
+    #isAlive;
+    #img;
+    #scale; 
+    constructor(img,x,y,vx,vy)
     {
-        super(x,y,dx,dy);
-        this.angle = 0;
-        this.fireRate = 1;
-        this.lifePoints = 20;
-        this.isAlive = true;
-        this.img = img;
-        this.scale = .7;
+        super(x,y,vx,vy);
+        this.#angle = 0;
+        this.#fireRate = 1;
+        this.#lifePoints = 20;
+        this.#isAlive = true;
+        this.#img = img;
+        this.#scale = .7;
     }
 
+    get angle(){
+        return this.#angle;
+    }
+    get fireRate(){
+        return this.#fireRate;
+    }
+    get lifePoints(){
+        return this.#lifePoints;
+    }
+    get isAlive(){
+        return this.#isAlive;
+    }
+    get scale(){
+        return this.#scale;
+    }
+
+    set angle(value){
+        this.#angle = value;
+    }
+    set fireRate(value){
+        this.#fireRate = value;
+    }
+    set lifePoints(value){
+        this.#lifePoints = value;
+    }
+    set isAlive(value){
+        this.#isAlive = value;
+    }
+    set scale(value){
+        this.#scale = value;
+    }
+    
     drawShip(ctx){
 
-        const IMG_WIDTH = this.scale*this.img.width;
-        const IMG_HEIGHT = this.scale*this.img.height;
+        const IMG_WIDTH = this.#scale*this.#img.width;
+        const IMG_HEIGHT = this.#scale*this.#img.height;
 
-        const drawX0 = this.x - IMG_WIDTH/2;
-        const drawY0 = this.y - IMG_HEIGHT/2;
+        const drawX0 = super.x - IMG_WIDTH/2;
+        const drawY0 = super.y - IMG_HEIGHT/2;
 
         //ctx.setTransform(1,0,0,1,centerX,centerY);
-        ctx.drawImage(this.img, drawX0, drawY0,IMG_WIDTH,IMG_HEIGHT); 
+        ctx.drawImage(this.#img, drawX0, drawY0,IMG_WIDTH,IMG_HEIGHT); 
     }
 
     rotateShip(ctx,mousePosition){
-        const X0 = this.x;
-        const Y0 = this.y;
-        this.angle = Math.atan2(mousePosition.y - Y0, mousePosition.x - X0);
+        const X0 = super.x;
+        const Y0 = super.y;
+        this.#angle = Math.atan2(mousePosition.y - Y0, mousePosition.x - X0);
         ctx.translate(X0, Y0);
-        ctx.rotate(Math.PI/2 + this.angle);
+        ctx.rotate(Math.PI/2 + this.#angle);
         ctx.translate(-X0, -Y0);
     }
 }
