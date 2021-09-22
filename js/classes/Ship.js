@@ -57,7 +57,6 @@ class Ship extends Point
         const drawX0 = super.x - IMG_WIDTH/2;
         const drawY0 = super.y - IMG_HEIGHT/2;
 
-        //ctx.setTransform(1,0,0,1,centerX,centerY);
         ctx.drawImage(this.#img, drawX0, drawY0,IMG_WIDTH,IMG_HEIGHT); 
     }
 
@@ -68,5 +67,6 @@ class Ship extends Point
         ctx.translate(X0, Y0);
         ctx.rotate(Math.PI/2 + this.#angle);
         ctx.translate(-X0, -Y0);
+        this.drawShip(ctx);
     }
 }

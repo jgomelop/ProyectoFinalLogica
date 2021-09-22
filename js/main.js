@@ -30,19 +30,20 @@ function init ()
     function update() {
         ctx.clearRect(0,0,CANVAS_WIDTH,CANVAS_HEIGHT);
         ctx.setTransform(1,0,0,1,0,0);
-
-        //if (mousePos){
-        //    player.rotateShip(ctx,mousePos);
-        //}
-
-        draw();
+        drawAll();
     }
 
-    function draw() {
+    function drawAll() {
 
-        player.drawShip(ctx);
+        // Drawing Player Ship
+        if (mousePos){
+            player.rotateShip(ctx,mousePos);
+            ctx.setTransform(1,0,0,1,0,0);
+        }else{
+            player.drawShip(ctx);
+        }
 
-        // Drawing bullets
+        // Drawing player bullets
         if (playerBullets){
             for (let i = 0; i < playerBullets.length; i++){
                 let bullet = playerBullets[i];
