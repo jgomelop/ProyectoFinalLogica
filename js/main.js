@@ -48,6 +48,7 @@ function init ()
             for (let i = 0; i < playerBullets.length; i++){
                 let bullet = playerBullets[i];
                 bullet.drawBullets(ctx);
+                //playerBullets.move();
             }
         }
     }
@@ -72,10 +73,16 @@ function init ()
     function playerShoot(e){
         mousePos = mouseCoord(e);
 
-        const xDirection = Math.sign(mousePos.x);
-        const yDirection = Math.sign(mousePos.y);
+        const SPEED = 10/Math.SQRT2; // Rapidez en una dimensión
 
-        let bullet = new Projectile(playerBulletImg,player.x,player.y,xDirection*10,yDirection*10);
+        // Vector diferencia entre posición de disparo  y posición del mouse.
+        const X_DIFF = mousePos.x - player.x;
+        const Y_DIFF = mousePos.y - player.y;
+        const R_MAGNITUDE = Math.sqrt(X_DIFF*X_DIFF + Y_DIFF*Y_DIFF);
+        const X_DIRECTION = X_DIFF/R_MAGNITUDE;
+        const Y_DIRECTION = Y_DIFF/R_MAGNITUDE;
+
+        let bullet = new Projectile(playerBulletImg,player.x,player.y,X_DIRECTION*SPEED,Y_DIRECTION*SPEED);
         bullet.xFinal = mousePos.x;
         bullet.yFinal = mousePos.y;
 

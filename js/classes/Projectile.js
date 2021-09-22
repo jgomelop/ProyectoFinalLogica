@@ -27,15 +27,12 @@ class Projectile extends Point
 
     move(){
 
-        const xDir = Math.sign(this.#xFinal - super.x); // x sign direction
-        const yDir = Math.sign(this.#yFinal - super.y); // y sign direction
-
         let xDistance = Math.abs(super.x - this.#xFinal);
         let yDistance = Math.abs(super.y - this.#yFinal);
-        let distanceToFinalPoint = Math.SQRT2(xDistance*xDistance + yDistance*yDistance)
+        let distanceToFinalPoint = Math.sqrt(xDistance*xDistance + yDistance*yDistance)
         const DIFF_ERROR_RADIOUS = 10;
 
-        while (distanceToFinalPoint > DIFF_ERROR_RADIOUS) {
+        if (distanceToFinalPoint > DIFF_ERROR_RADIOUS) {
             super.x += xDir*super.vx;
             super.y += yDir*super.vy;
         }
