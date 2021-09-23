@@ -45,6 +45,12 @@
     width: 1004px;
 }
 
+
 #pause{
     position: absolute;
+}
+
+.main .bullet{
+    position: absolute;
+    z-index: -1;
 }

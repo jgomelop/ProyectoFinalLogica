@@ -21,6 +21,8 @@ const CANVAS_HEIGHT = canvas.height = 600;
 var animation;
 var mousePos;
 
+var keys = new Array();
+
 
 /**
  * PLAYER DATA
@@ -31,7 +33,7 @@ playerImage.src = 'js/resources/ships/player_ship.png';
 var IMAGE_WIDTH = 50;
 var IMAGE_HEIGHT = 50;
 
-var player = new Ship(playerImage,CANVAS_WIDTH/2,CANVAS_HEIGHT/2,10,10);
+var player = new Ship(playerImage,CANVAS_WIDTH/2,CANVAS_HEIGHT/2,5,5);
 const playerBulletImg = new Image();
 playerBulletImg.onload = function(){};
 playerBulletImg.src= 'js/resources/proyectiles/bala-jugador.png';
@@ -87,7 +89,7 @@ function init ()
         //ctx.drawImage(playerImage, player.x, player.y, IMAGE_WIDTH, IMAGE_HEIGHT);
         player.drawShip(ctx);
 
-        
+        ctx.globalCompositeOperation = 'destination-over';
         
         // Drawing bullets
         if (playerBullets){
@@ -103,6 +105,7 @@ function init ()
         animation = requestAnimationFrame(animate);
         update();
         ctx.restore();
+        movePlayer();
     }
     animate();
 
@@ -138,8 +141,8 @@ function init ()
     }
 
     
-    body.addEventListener("keydown", movePlayer);
-    function movePlayer(e){
+    body.addEventListener("keydown", pressKey);
+    /*function movePlayer(e){
         switch (e.key)
         {
          
@@ -161,7 +164,32 @@ function init ()
             
         }
         update();           
+    }*/
+    function pressKey(e){
+        keys[e.keyCode]=true;
     }
+
+    body.addEventListener("keyup", releaseKey);
+    function releaseKey(e){
+        delete keys[e.keyCode];
+    }
+
+    function movePlayer(){
+        if(keys[87]){
+            player.moveUp();
+        }
+        if(keys[83]){
+            player.moveDown();
+        }
+        if(keys[65]){
+            player.moveLeft();
+        }
+        if(keys[68]){
+            player.moveRight();
+        }
+        
+    }
+
 }
 document.addEventListener('DOMContentLoaded', init);
 
