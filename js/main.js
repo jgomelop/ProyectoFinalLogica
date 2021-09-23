@@ -90,7 +90,6 @@ function init ()
         player.drawShip(ctx);
 
         ctx.globalCompositeOperation = 'destination-over';
-        
         // Drawing bullets
         if (playerBullets){
             for (let i = 0; i < playerBullets.length; i++){
@@ -122,8 +121,8 @@ function init ()
     body.addEventListener('click', playerShoot);
     function playerShoot(e){
         mousePos = mouseCoord(e);
-        const xCenter = CANVAS_WIDTH/2;
-        const yCenter =  CANVAS_HEIGHT/2;
+        const xCenter = player.x;
+        const yCenter =  player.y;
 
         const xDirection = Math.sign(mousePos.x);
         const yDirection = Math.sign(mousePos.y);
