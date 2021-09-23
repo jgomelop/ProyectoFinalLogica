@@ -1,7 +1,19 @@
 var body = document.getElementById('body');
 var canvas = document.getElementById("canvas");
-var container = document.getElementById("container")
 var ctx = canvas.getContext("2d");
+
+var container = document.getElementById("container");
+var playButton = document.getElementById("play");
+var menu = document.getElementById("menu");
+var backButton = document.getElementById("back")
+var instructions = document.getElementById("instructions");
+var pause = document.getElementById("pause");
+var continueButton = document.getElementById("continue");
+var gameInstructions = document.getElementById("gameinstructions");
+gameInstructions.style.display="none";
+pause.style.display="none";
+
+
 ctx.save();
 const CANVAS_WIDTH = canvas.width = 1000;
 const CANVAS_HEIGHT = canvas.height = 600;
@@ -31,6 +43,32 @@ var playerBullets = new Array();
 
 function init () 
 {   
+    body.onkeydown = function(e){
+        if (e.keyCode===80 && pause.style.display=="none"){
+            pause.style.display="block";
+        } else if(e.keyCode===80 && pause.style.display=="block"){
+            pause.style.display="none";
+        }
+    }
+
+    continueButton.onclick = function(){
+        pause.style.display="none";
+    }
+    
+    backButton.onclick = function(){
+        gameInstructions.style.display="none";
+        menu.style.display="block";
+    }
+
+    instructions.onclick = function(){
+        gameInstructions.style.display="block";
+        menu.style.display="none";
+    }
+
+    playButton.onclick = function(){
+        menu.style.display="none";
+    }
+
     function update() {
         ctx.clearRect(0,0,CANVAS_WIDTH,CANVAS_HEIGHT);
         ctx.setTransform(1,0,0,1,0,0);

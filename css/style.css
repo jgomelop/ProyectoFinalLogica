@@ -11,8 +11,8 @@
 
 #container{
     position: relative;
-    height: 604px;
-    width: 1004px;
+    height: 600px;
+    width: 1000px;
     margin-top: 5px;
     margin-left: 170px;
 }
@@ -37,6 +37,12 @@
         background-position-y: 256px;
     }
 
+}
+
+#menu{
+    position: absolute;
+    height: 604px;
+    width: 1004px;
 }
 
 #pause{
