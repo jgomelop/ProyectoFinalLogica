@@ -16,7 +16,6 @@ class Point
     /**
      * ACCESORES
      */
-    // Getters
     get x (){
         return this.#x;
     }
@@ -29,7 +28,7 @@ class Point
     get vy (){
         return this.#vy;
     }
-    // SETTERS
+
     set x (value){
         this.#x = value;
     }

@@ -13,8 +13,6 @@ var mousePos;
 const playerImage = new Image();
 playerImage.onload = function(){};
 playerImage.src = 'js/resources/ships/player_ship.png';
-var IMAGE_WIDTH = 50;
-var IMAGE_HEIGHT = 50;
 
 var player = new Ship(playerImage,CANVAS_WIDTH/2,CANVAS_HEIGHT/2,10,10);
 const playerBulletImg = new Image();
@@ -47,8 +45,10 @@ function init ()
         if (playerBullets){
             for (let i = 0; i < playerBullets.length; i++){
                 let bullet = playerBullets[i];
-                bullet.drawBullets(ctx);
-                //playerBullets.move();
+                if (bullet.isAlive){
+                    bullet.drawBullets(ctx);
+                    bullet.move();
+                }  
             }
         }
     }
@@ -91,7 +91,6 @@ function init ()
 
         // pushing bullet to playerBullets array
         playerBullets.push(bullet);
-        console.log(bullet.x,bullet.y);
     }
 
     body.addEventListener("keydown", movePlayer);

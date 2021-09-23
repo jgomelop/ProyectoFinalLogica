@@ -15,6 +15,32 @@ class Projectile extends Point
         this.#isAlive = true;
     }
 
+    get xFinal(){
+        return this.#xFinal;
+    }
+    get yFinal(){
+        return this.#yFinal;
+    }
+    get scale(){
+        return this.#scale;
+    }
+    get isAlive(){
+        return this.#isAlive;
+    }
+
+    set xFinal(value){
+        this.#xFinal = value;
+    }
+    set yFinal(value){
+        this.#yFinal = value;
+    }
+    set scale(value){
+        this.#scale = value;
+    }
+    set isAlive(value){
+        this.#isAlive = value;
+    }
+
     drawBullets(ctx){
         const IMG_WIDTH = this.#scale*this.#img.width;
         const IMG_HEIGHT = this.#scale*this.#img.height;
@@ -33,8 +59,10 @@ class Projectile extends Point
         const DIFF_ERROR_RADIOUS = 10;
 
         if (distanceToFinalPoint > DIFF_ERROR_RADIOUS) {
-            super.x += xDir*super.vx;
-            super.y += yDir*super.vy;
+            super.x += super.vx;
+            super.y += super.vy;
+        } else {
+            this.#isAlive = false;
         }
         
     }
