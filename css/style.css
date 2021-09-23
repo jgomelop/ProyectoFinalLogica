@@ -9,16 +9,22 @@
     background-size: cover;
 }
 
-#canvas{
-    background: url(../js/resources/backgrounds/background-blue.png);
+#container{
+    position: relative;
+    height: 600px;
+    width: 1000px;
     margin-top: 5px;
     margin-left: 170px;
+}
+
+#canvas{
+    background: url(../js/resources/backgrounds/background-blue.png);
     border: 2px solid #555555;
     height: 600px;
     width: 1000px;
     animation: scroll-background 6s linear infinite;
     box-shadow: 0 2px rgba(0, 0, 0, 0);
-    position: relative;
+    position: absolute;
     z-index: -2;  
 }
 
@@ -29,4 +35,79 @@
     to{
         background-position-y: 256px;
     }
+
+}
+
+#menu{
+    position: absolute;
+    margin: auto;
+    height: 604px;
+    width: 1004px;
+    background-color: gray;
+}
+
+.buttons {
+
+    cursor:pointer;
+    margin-bottom: 65px;
+    background-color: #555555;
+    border: none;
+    color: white;
+    padding: 15px 32px;
+    text-align: center;
+    text-decoration: none;
+    display: inline-block;
+    font-size: 16px;
+    border-radius: 4px;
+    -webkit-transition-duration: 0.4s; 
+    transition-duration: 0.4s;
+    color: white;
+}
+
+#Logo{
+    margin-top: 215px;
+    margin-left: 400px;
+    float: left;
+    height: 40px;
+    width: 204px;
+}
+
+#play{
+    margin-top: 325px;
+    margin-left: -149px;
+    float: left;
+}
+
+#instructions{
+    margin-top: 384px;
+    margin-left: -179px;
+    float: left;
+}
+
+#gameinstructions{
+    position: absolute;
+    margin: auto;
+    height: 604px;
+    width: 1004px;
+    background-color: gray;
+    text-align: center;
+}
+
+#back{
+    margin-top: 10px;
+    margin-left: 0px;
+}
+
+#pause{
+    position: absolute;
+    margin: auto;
+    height: 604px;
+    width: 1004px;
+    text-align: center;
+}
+
+#title2{
+    margin-top: 255px;
+    margin-bottom: 10px;
+    float: none;
 }
