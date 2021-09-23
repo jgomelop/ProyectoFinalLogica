@@ -69,6 +69,7 @@ function init ()
 
     playButton.onclick = function(){
         menu.style.display="none";
+        animate();
     }
 
     function update() {
@@ -106,7 +107,7 @@ function init ()
         ctx.restore();
         movePlayer();
     }
-    animate();
+    //animate();
 
     // EVENT LISTENERS
     body.addEventListener('mousemove', mouseCoord);
