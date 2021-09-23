@@ -48,7 +48,9 @@ function init ()
                 if (bullet.isAlive){
                     bullet.drawBullets(ctx);
                     bullet.move();
-                }  
+                }else{
+                    playerBullets.splice(i,1)
+                }
             }
         }
     }
@@ -73,7 +75,7 @@ function init ()
     function playerShoot(e){
         mousePos = mouseCoord(e);
 
-        const SPEED = 10/Math.SQRT2; // Rapidez en una dimensión
+        const SPEED = 8/Math.SQRT2; // Rapidez en una dimensión
 
         // Vector diferencia entre posición de disparo  y posición del mouse.
         const X_DIFF = mousePos.x - player.x;
