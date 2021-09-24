@@ -13,15 +13,13 @@ var gameInstructions = document.getElementById("gameinstructions");
 gameInstructions.style.display="none";
 pause.style.display="none";
 
-
-ctx.save();
 const CANVAS_WIDTH = canvas.width = 1000;
 const CANVAS_HEIGHT = canvas.height = 600;
 
 var animation;
 var mousePos;
 
-var keys = new Array();
+var keys = new Array(); // Array para las teclas.
 
 
 /**
@@ -41,34 +39,7 @@ playerBulletImg.src= 'js/resources/proyectiles/bala-jugador.png';
 var playerBullets = new Array();
 
 function init () 
-{   
-    body.onkeydown = function(e){
-        if (e.keyCode===80 && pause.style.display=="none"){
-            pause.style.display="block";
-        } else if(e.keyCode===80 && pause.style.display=="block"){
-            pause.style.display="none";
-        }
-    }
-
-    continueButton.onclick = function(){
-        pause.style.display="none";
-    }
-    
-    backButton.onclick = function(){
-        gameInstructions.style.display="none";
-        menu.style.display="block";
-    }
-
-    instructions.onclick = function(){
-        gameInstructions.style.display="block";
-        menu.style.display="none";
-    }
-
-    playButton.onclick = function(){
-        menu.style.display="none";
-        animate();
-    }
-
+{  
     function update() {
         ctx.clearRect(0,0,CANVAS_WIDTH,CANVAS_HEIGHT);
         ctx.setTransform(1,0,0,1,0,0);
@@ -85,12 +56,13 @@ function init ()
             player.drawShip(ctx);
         }
 
-        ctx.globalCompositeOperation = 'destination-over';
         // Drawing bullets
         if (playerBullets){
             for (let i = 0; i < playerBullets.length; i++){
                 let bullet = playerBullets[i];
                 if (bullet.isAlive){
+                    ctx.setTransform(1,0,0,1,0,0);
+                    //ctx.globalCompositeOperation = 'destination-over';
                     bullet.drawBullets(ctx);
                     bullet.move();
                 }else{
@@ -100,14 +72,11 @@ function init ()
         }
     }
 
-
     function animate(){
         animation = requestAnimationFrame(animate);
         update();
-        //ctx.restore();
         movePlayer();
     }
-    //animate();
 
     // EVENT LISTENERS
     body.addEventListener('mousemove', mouseCoord);
@@ -123,7 +92,7 @@ function init ()
     function playerShoot(e){
         mousePos = mouseCoord(e);
 
-        const SPEED = 8/Math.SQRT2; // Rapidez en una dimensión
+        const SPEED = 10/Math.SQRT2; // Rapidez en una dimensión
 
         // Vector diferencia entre posición de disparo  y posición del mouse.
         const X_DIFF = mousePos.x - player.x;
@@ -142,31 +111,8 @@ function init ()
         // pushing bullet to playerBullets array
         playerBullets.push(bullet);
     }
-
-    
+ 
     body.addEventListener("keydown", pressKey);
-    /*function movePlayer(e){
-        switch (e.key)
-        {
-            case "w" : 
-                player.moveUp();           
-                break;
-
-            case "s" : 
-                player.moveDown();           
-                break;         
-
-            case "a" :
-                player.moveLeft();           
-                break;
-
-            case "d" :
-                player.moveRight();           
-                break;
-            
-        }
-        update();           
-    }*/
     function pressKey(e){
         keys[e.keyCode]=true;
     }
@@ -192,6 +138,34 @@ function init ()
         
     }
 
+    body.onkeydown = function(e){
+        if (e.keyCode===80 && pause.style.display=="none"){
+
+            pause.style.display="block";
+        } else if(e.keyCode===80 && pause.style.display=="block"){
+            pause.style.display="none";
+        }
+    }
+
+    continueButton.onclick = function(){
+        pause.style.display="none";
+    }
+    
+    backButton.onclick = function(){
+        gameInstructions.style.display="none";
+        menu.style.display="block";
+    }
+
+    instructions.onclick = function(){
+        gameInstructions.style.display="block";
+        menu.style.display="none";
+    }
+
+    playButton.onclick = function(){
+        menu.style.display="none";
+        
+        animate();
+    }
 }
 document.addEventListener('DOMContentLoaded', init);
 
