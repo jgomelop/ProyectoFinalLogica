@@ -14,7 +14,7 @@ class Ship extends Point
         this.#lifePoints = 20;
         this.#isAlive = true;
         this.#img = img;
-        this.#scale = .7;
+        this.#scale = .5;
     }
 
     get angle(){
@@ -31,6 +31,9 @@ class Ship extends Point
     }
     get scale(){
         return this.#scale;
+    }
+    get img (){
+        return this.#img;
     }
 
     set angle(value){
@@ -68,5 +71,6 @@ class Ship extends Point
         ctx.rotate(Math.PI/2 + this.#angle);
         ctx.translate(-X0, -Y0);
         this.drawShip(ctx);
+        ctx.setTransform(1,0,0,1,0,0);
     }
 }

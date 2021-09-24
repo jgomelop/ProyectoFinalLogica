@@ -1,8 +1,11 @@
+// Canvas Data
 var body = document.getElementById('body');
 var canvas = document.getElementById("canvas");
 var ctx = canvas.getContext("2d");
+const CANVAS_WIDTH = canvas.width = 1000;
+const CANVAS_HEIGHT = canvas.height = 600;
 
-//MENU BUTTONS AND DIVS
+// Definiciones para los menús
 var container = document.getElementById("container");
 var playButton = document.getElementById("play");
 var menu = document.getElementById("menu");
@@ -26,33 +29,68 @@ gameControls.style.display="none";
 gameReferences.style.display="none";
 pause.style.display="none";
 
-const CANVAS_WIDTH = canvas.width = 1000;
-const CANVAS_HEIGHT = canvas.height = 600;
 
 var animation;
 var mousePos;
-
 var keys = new Array(); // Array para las teclas.
 
-
+// ===================================================================== //
 /**
  * PLAYER DATA
  */
 const playerImage = new Image();
-playerImage.onload = function(){};
 playerImage.src = 'js/resources/ships/player_ship.png';
-
+playerImage.onload = function(){};
 var player = new Ship(playerImage,CANVAS_WIDTH/2,CANVAS_HEIGHT/2,5,5);
-const playerBulletImg = new Image();
-playerBulletImg.onload = function(){};
-playerBulletImg.src= 'js/resources/proyectiles/bala-jugador.png';
 
+const playerBulletImg = new Image();
+playerBulletImg.src= 'js/resources/proyectiles/bala-jugador.png';
+playerBulletImg.onload = function(){};
 
 // PROJECTILES
 var playerBullets = new Array();
 
+// ====================================================================== //
+// ENEMIGOS
+//======================================================================= //
+var enemies = new Array();
+// Naves básicas
+const basicEnemyImg = new Image();
+basicEnemyImg.onload = function(){};
+basicEnemyImg.src = 'js/resources/ships/Alien-Scout.png';
+
+function spawnEnemies(){
+    setInterval( () => {
+        let x;
+        let y;
+        let diff = 128; // tamaño de img de enemigo básico.
+        let basicEnemy;
+        let speed = 10/Math.SQRT2;
+
+        let xFinal = Math.random() * (CANVAS_WIDTH  - 200) + 200;
+        let yFinal = Math.random() * (CANVAS_HEIGHT - 200) + 200;
+
+        if (Math.random() < 0.5) {
+            x = Math.random() < 0.5 ? 0 - diff : CANVAS_WIDTH + diff;
+            y = Math.random() * CANVAS_HEIGHT;
+        } else {
+            x = Math.random() * CANVAS_WIDTH;
+            y = Math.random() < 0.5 ? 0 - diff : CANVAS_HEIGHT + diff;
+        }
+
+        basicEnemy = new EnemyShip(basicEnemyImg,x,y,speed,speed,xFinal,yFinal);
+        enemies.push(basicEnemy)
+
+    }, 2000)
+}
+
+
+// ============================================================================= //
+// ============================= FUNCION PRINCIPAL ============================= //
+// ============================================================================= //
 function init () 
-{  
+{   
+
     function update() {
         ctx.clearRect(0,0,CANVAS_WIDTH,CANVAS_HEIGHT);
         ctx.setTransform(1,0,0,1,0,0);
@@ -64,9 +102,10 @@ function init ()
         // Drawing Player Ship
         if (mousePos){
             player.rotateShip(ctx,mousePos);
-            ctx.setTransform(1,0,0,1,0,0);
+            //ctx.setTransform(1,0,0,1,0,0);
         }else{
             player.drawShip(ctx);
+            //ctx.setTransform(1,0,0,1,0,0);
         }
 
         // Drawing bullets
@@ -83,6 +122,29 @@ function init ()
                 }
             }
         }
+
+        //Drawing enemies
+        let target = {
+            x: player.x,
+            y: player.y,
+        }
+        if (enemies)
+        {
+            for (let i = 0; i < enemies.length; i++) {
+                let enemy = enemies[i];
+                let epsilon = 5; // radio de error para la resta
+                let diffs = (Math.abs(enemy.x - enemy.xFinal) > epsilon) && 
+                            (Math.abs(enemy.y - enemy.yFinal) > epsilon);
+                ctx.setTransform(1,0,0,1,0,0);
+                enemy.rotateShip(ctx,target);
+
+                if (diffs)
+                {
+                    enemy.move();
+                }
+            }
+        }
+        
     }
 
     function animate(){
@@ -186,6 +248,8 @@ function init ()
 
     playButton.onclick = function(){
         menu.style.display="none";
+        spawnEnemies();
+        animate();
     }
 }  
 document.addEventListener('DOMContentLoaded', init);
