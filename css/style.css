@@ -47,10 +47,12 @@
 
 }
 
-#menu{
+.divs1{
     position: absolute;
     background: url(../js/resources/backgrounds/space-2.jpg);
+    
     margin: auto;
+    text-align: center;
     height: 604px;
     width: 1004px;
     background-color: gray;
@@ -118,19 +120,14 @@
 
 #controls{
     margin-top: 158px;
-    margin-left: -211px;
+    margin-left: -209px;
     float: left;
 }
 
-#gamecontrols{
-    position: absolute;
-    background: url(../js/resources/backgrounds/space-2.jpg);
-    animation: movement 6s infinite linear normal;
-    margin: auto;
-    height: 604px;
-    width: 1004px;
-    text-align: center;
-    margin-top: 5px;
+#references{
+    margin-top: 216px;
+    margin-left: -219px;
+    float: left;
 }
 
 #title1{
@@ -157,23 +154,6 @@
     margin-left: -252px;
 }
 
-#instructions{
-    margin-top: 216px;
-    margin-left: -230px;
-    float: left;
-}
-
-#gameinstructions{
-    position: absolute;
-    background: url(../js/resources/backgrounds/space-2.jpg);
-    animation: movement 6s infinite linear normal;
-    margin: auto;
-    height: 604px;
-    width: 1004px;
-    text-align: center;
-    margin-top: 5px;
-}
-
 #title2{
     margin-top: 5px;
 }
@@ -181,27 +161,38 @@
 #textinstru{
     background-color: grey;
     position:absolute;
+    margin: auto;
     width: 200px;
     height: 200px;
 }
 
-/*#back2{
-
-}*/
-
-
-#pause{
-    position: absolute;
-    margin: auto;
-    height: 604px;
-    width: 1004px;
-    text-align: center;
-    font-family: 'Press Start 2P', cursive;
-    color: #4CAF50;
+#back2{
+    float: left;
 }
 
 #title2{
     margin-top: 255px;
     margin-bottom: 10px;
     float: none;
+}
+
+.divs2{
+    position: absolute;
+    margin: auto;
+    width: 400px;
+    height: 200px;
+    background-color: red;
+    text-align: center;
+    margin-top: 188px;
+    margin-left: 295px;
+}
+
+#center1{
+    margin-top: 65px;
+    margin-bottom: 16px;
+}
+
+#center2{
+    margin-top: 65px;
+    margin-bottom: 16px;
 }

@@ -8,14 +8,22 @@ var playButton = document.getElementById("play");
 var menu = document.getElementById("menu");
 var backButton1 = document.getElementById("back1")
 var backButton2 = document.getElementById("back2");
+var playAgain = document.getElementById("again"); //NO USE
+var winButton = document.getElementById("back3"); //NO USE 
 var controls = document.getElementById("controls");
-var instructions = document.getElementById("instructions");
-var pause = document.getElementById("pause");
-var gameInstructions = document.getElementById("gameinstructions");
+var references = document.getElementById("references");
 var continueButton = document.getElementById("continue");
+var winWindow = document.getElementById("win"); //NO USE 
+var loseWindow = document.getElementById("lose"); //NO USE 
+var pause = document.getElementById("pause");
+var gameReferences = document.getElementById("gamereferences");
 var gameControls = document.getElementById("gamecontrols");
+
+//HIDE DIVS
+winWindow.style.display="none";
+loseWindow.style.display="none";
 gameControls.style.display="none";
-gameInstructions.style.display="none";
+gameReferences.style.display="none";
 pause.style.display="none";
 
 const CANVAS_WIDTH = canvas.width = 1000;
@@ -162,7 +170,7 @@ function init ()
     }
 
     backButton2.onclick = function(){
-        gameInstructions.style.display ="none";
+        gameReferences.style.display ="none";
         menu.style.display="block";
     }
 
@@ -171,8 +179,8 @@ function init ()
         menu.style.display="none";
     }
 
-    instructions.onclick = function(){
-        gameInstructions.style.display="block";
+    references.onclick = function(){
+        gameReferences.style.display="block";
         menu.style.display="none";
     }
 
