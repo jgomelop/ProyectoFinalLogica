@@ -2,10 +2,12 @@ var body = document.getElementById('body');
 var canvas = document.getElementById("canvas");
 var ctx = canvas.getContext("2d");
 
+//MENU BUTTONS AND DIVS
 var container = document.getElementById("container");
 var playButton = document.getElementById("play");
 var menu = document.getElementById("menu");
-var backButton = document.getElementById("back")
+var backButton1 = document.getElementById("back1")
+var backButton2 = document.getElementById("back2");
 var controls = document.getElementById("controls");
 var instructions = document.getElementById("instructions");
 var pause = document.getElementById("pause");
@@ -154,9 +156,13 @@ function init ()
         pause.style.display="none";
     }
     
-    backButton.onclick = function(){
-        gameInstructions.style.display ="none";
+    backButton1.onclick = function(){
         gameControls.style.display="none";
+        menu.style.display="block";
+    }
+
+    backButton2.onclick = function(){
+        gameInstructions.style.display ="none";
         menu.style.display="block";
     }
 

@@ -85,7 +85,7 @@
 }
 
 .buttons:hover {
-    background-color: black; 
+    background-color: rgba(0, 0, 0, .1); 
     color: #4CAF50;
     border: 2px solid #4CAF50;
     
@@ -133,9 +133,28 @@
     margin-top: 5px;
 }
 
-#back{
-    margin-top: 10px;
-    margin-left: 0px;
+#title1{
+    margin-top: 5px;
+}
+
+#keys{
+    float:left;
+    margin-left: 238px;
+    margin-top: 5px;
+    width: 500px;
+    height: 220px;
+}
+
+#mouse{
+    float: left;
+    margin-top: 5px;
+    margin-left: 309px;
+}
+
+#back1{
+    float: left;
+    margin-top: 273px;
+    margin-left: -252px;
 }
 
 #instructions{
@@ -154,6 +173,22 @@
     text-align: center;
     margin-top: 5px;
 }
+
+#title2{
+    margin-top: 5px;
+}
+
+#textinstru{
+    background-color: grey;
+    position:absolute;
+    width: 200px;
+    height: 200px;
+}
+
+/*#back2{
+
+}*/
+
 
 #pause{
     position: absolute;
