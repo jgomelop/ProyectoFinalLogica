@@ -27,33 +27,59 @@ var keys = new Array(); // Array para las teclas.
  * PLAYER DATA
  */
 const playerImage = new Image();
-playerImage.onload = function(){};
 playerImage.src = 'js/resources/ships/player_ship.png';
-
+playerImage.onload = function(){};
 var player = new Ship(playerImage,CANVAS_WIDTH/2,CANVAS_HEIGHT/2,5,5);
+
 const playerBulletImg = new Image();
-playerBulletImg.onload = function(){};
 playerBulletImg.src= 'js/resources/proyectiles/bala-jugador.png';
+playerBulletImg.onload = function(){};
 
 // PROJECTILES
 var playerBullets = new Array();
+
 // ====================================================================== //
-
 // ENEMIGOS
-
+//======================================================================= //
 var enemies = new Array();
 // Naves básicas
 const basicEnemyImg = new Image();
 basicEnemyImg.onload = function(){};
 basicEnemyImg.src = 'js/resources/ships/Alien-Scout.png';
 
-var basicEnemy = new Ship(basicEnemyImg,CANVAS_WIDTH/2,CANVAS_HEIGHT/2,5,5);
+function spawnBasicEnemies(){
+    setInterval( () => {
+        let x;
+        let y;
+        let diff = 128;
+        let basicEnemy;
+        let speed = 10;
+
+        if (Math.random() < 0.5) {
+            x = Math.random() < 0.5 ? 0 - diff : CANVAS_WIDTH + diff;
+            y = Math.random() * CANVAS_HEIGHT;
+        } else {
+            x = Math.random() * CANVAS_WIDTH;
+            y = Math.random() < 0.5 ? 0 - diff : CANVAS_HEIGHT + diff;
+        }
+
+        basicEnemy = new Ship(basicEnemyImg,x,y,speed,speed);
+        basicEnemy.xFinal = Math.random() * (CANVAS_WIDTH - 300) + 300;
+        basicEnemy.yFinal = Math.random() * (CANVAS_HEIGHT - 300) + 300;
+
+        enemies.push(basicEnemy)
+
+    }, 3000)
+}
+
 
 // ============================================================================= //
 // ============================= FUNCION PRINCIPAL ============================= //
 // ============================================================================= //
 function init () 
-{  
+{   
+    spawnBasicEnemies();
+    
     function update() {
         ctx.clearRect(0,0,CANVAS_WIDTH,CANVAS_HEIGHT);
         ctx.setTransform(1,0,0,1,0,0);
@@ -87,7 +113,14 @@ function init ()
         }
 
         //Drawing enemies
-        basicEnemy.drawShip(ctx);
+        let target = {
+            x: player.x,
+            y: player.y,
+        }
+        for (let i = 0; i < enemies.length; i++) {
+            let enemy = enemies[i];
+            enemy.rotateShip(ctx,target);
+        }
     }
 
     function animate(){

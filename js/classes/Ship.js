@@ -32,6 +32,9 @@ class Ship extends Point
     get scale(){
         return this.#scale;
     }
+    get img (){
+        return this.#img;
+    }
 
     set angle(value){
         this.#angle = value;
