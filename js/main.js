@@ -1,7 +1,11 @@
+// Canvas Data
 var body = document.getElementById('body');
 var canvas = document.getElementById("canvas");
 var ctx = canvas.getContext("2d");
+const CANVAS_WIDTH = canvas.width = 1000;
+const CANVAS_HEIGHT = canvas.height = 600;
 
+// Definiciones para los menús
 var container = document.getElementById("container");
 var playButton = document.getElementById("play");
 var menu = document.getElementById("menu");
@@ -13,15 +17,12 @@ var gameInstructions = document.getElementById("gameinstructions");
 gameInstructions.style.display="none";
 pause.style.display="none";
 
-const CANVAS_WIDTH = canvas.width = 1000;
-const CANVAS_HEIGHT = canvas.height = 600;
 
 var animation;
 var mousePos;
-
 var keys = new Array(); // Array para las teclas.
 
-
+// ===================================================================== //
 /**
  * PLAYER DATA
  */
@@ -34,10 +35,23 @@ const playerBulletImg = new Image();
 playerBulletImg.onload = function(){};
 playerBulletImg.src= 'js/resources/proyectiles/bala-jugador.png';
 
-
 // PROJECTILES
 var playerBullets = new Array();
+// ====================================================================== //
 
+// ENEMIGOS
+
+var enemies = new Array();
+// Naves básicas
+const basicEnemyImg = new Image();
+basicEnemyImg.onload = function(){};
+basicEnemyImg.src = 'js/resources/ships/Alien-Scout.png';
+
+var basicEnemy = new Ship(basicEnemyImg,CANVAS_WIDTH/2,CANVAS_HEIGHT/2,5,5);
+
+// ============================================================================= //
+// ============================= FUNCION PRINCIPAL ============================= //
+// ============================================================================= //
 function init () 
 {  
     function update() {
@@ -51,9 +65,10 @@ function init ()
         // Drawing Player Ship
         if (mousePos){
             player.rotateShip(ctx,mousePos);
-            ctx.setTransform(1,0,0,1,0,0);
+            //ctx.setTransform(1,0,0,1,0,0);
         }else{
             player.drawShip(ctx);
+            //ctx.setTransform(1,0,0,1,0,0);
         }
 
         // Drawing bullets
@@ -70,6 +85,9 @@ function init ()
                 }
             }
         }
+
+        //Drawing enemies
+        basicEnemy.drawShip(ctx);
     }
 
     function animate(){
