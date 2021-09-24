@@ -5,20 +5,30 @@
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <link rel="stylesheet" href="css/style.css">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Press+Start+2P&display=swap" rel="stylesheet">
     <title>Canvas</title>
 </head>
 <body id="body">
-<div id= container>
     <canvas id="canvas"></canvas>
-
+<div id= container>
     <div id=menu>
-        <h1 id=Logo>Space Survival</h1>
+        <h1 class= titles id=Logo>Space</h1>
+        <h1 class= titles id=Logo2>Survival</h1>
         <button class=buttons id=play>Play</button>
+        <button class=buttons id= controls>Controles</button>
         <button class=buttons id= instructions>Instrucciones</button>
     </div>
 
+    <div id=gamecontrols>
+        <h1 class= titles id= title1>Controles</h1>
+        <img id=keys src="js/resources/backgrounds/Teclas1-PhotoRoom.png"/>
+        <button class=buttons id=back>Regresar</button>
+    </div>
+
     <div id=gameinstructions>
-        <h1 id= title1>Instrucciones</h1>
+        <h1 class= titles id= title1>Instrucciones</h1>
         <button class=buttons id=back>Regresar</button>
     </div>
     

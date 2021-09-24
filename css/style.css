@@ -17,85 +17,142 @@
     margin-left: 170px;
 }
 
+.titles{
+    font-family: 'Press Start 2P', cursive;
+    color: #4CAF50;
+}
+
 #canvas{
-    background: url(../js/resources/backgrounds/background-blue.png);
+    background: url(../js/resources/backgrounds/space-2.jpg);
     border: 2px solid #555555;
     height: 600px;
     width: 1000px;
-    animation: scroll-background 6s linear infinite;
+    animation: movement 6s infinite linear normal;
     box-shadow: 0 2px rgba(0, 0, 0, 0);
     position: absolute;
-    z-index: -2;  
+    z-index: -2;
+    height: 600px;
+    width: 1000px;
+    margin-top: 5px;
+    margin-left: 170px;
 }
 
-@keyframes scroll-background{
+@keyframes movement{
     from{
         background-position-y: 0px;
     }
     to{
-        background-position-y: 256px;
+        background-position-y: 1024px;
     }
 
 }
 
 #menu{
     position: absolute;
+    background: url(../js/resources/backgrounds/space-2.jpg);
     margin: auto;
     height: 604px;
     width: 1004px;
     background-color: gray;
+    margin-top: 5px;
+    animation: movement 6s infinite linear normal;
+    font-family: 'Press Start 2P', cursive;
+    
 }
 
 .buttons {
-
+    font-family: 'Press Start 2P', cursive;
     cursor:pointer;
     margin-bottom: 65px;
-    background-color: #555555;
+    background-color: #4CAF50;
     border: none;
     color: white;
     padding: 15px 32px;
     text-align: center;
     text-decoration: none;
     display: inline-block;
-    font-size: 16px;
+    font-size: 10px;
     border-radius: 4px;
     -webkit-transition-duration: 0.4s; 
     transition-duration: 0.4s;
     color: white;
+    
+}
+
+.buttons {
+    -webkit-transition-duration: 0.4s; 
+    transition-duration: 0.4s;
+}
+
+.buttons:hover {
+    background-color: black; 
+    color: #4CAF50;
+    border: 2px solid #4CAF50;
+    
 }
 
 #Logo{
     margin-top: 215px;
-    margin-left: 400px;
+    margin-left: 421px;
     float: left;
     height: 40px;
-    width: 204px;
+    width: 157px;
+    color: #4CAF50;
+    
+}
+
+#Logo2{
+    margin-top: 0px;
+    margin-left: 375px;
+    float: left;
+    height: 40px;
+    width: 253px;
+    color: #4CAF50;
 }
 
 #play{
-    margin-top: 325px;
-    margin-left: -149px;
+    margin-top: 100px;
+    margin-left: -185px;
     float: left;
 }
 
-#instructions{
-    margin-top: 384px;
-    margin-left: -179px;
+#controls{
+    margin-top: 158px;
+    margin-left: -211px;
     float: left;
 }
 
-#gameinstructions{
+#gamecontrols{
     position: absolute;
+    background: url(../js/resources/backgrounds/space-2.jpg);
+    animation: movement 6s infinite linear normal;
     margin: auto;
     height: 604px;
     width: 1004px;
-    background-color: gray;
     text-align: center;
+    margin-top: 5px;
 }
 
 #back{
     margin-top: 10px;
     margin-left: 0px;
+}
+
+#instructions{
+    margin-top: 216px;
+    margin-left: -230px;
+    float: left;
+}
+
+#gameinstructions{
+    position: absolute;
+    background: url(../js/resources/backgrounds/space-2.jpg);
+    animation: movement 6s infinite linear normal;
+    margin: auto;
+    height: 604px;
+    width: 1004px;
+    text-align: center;
+    margin-top: 5px;
 }
 
 #pause{
@@ -104,6 +161,8 @@
     height: 604px;
     width: 1004px;
     text-align: center;
+    font-family: 'Press Start 2P', cursive;
+    color: #4CAF50;
 }
 
 #title2{

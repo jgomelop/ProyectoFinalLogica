@@ -6,10 +6,13 @@ var container = document.getElementById("container");
 var playButton = document.getElementById("play");
 var menu = document.getElementById("menu");
 var backButton = document.getElementById("back")
+var controls = document.getElementById("controls");
 var instructions = document.getElementById("instructions");
 var pause = document.getElementById("pause");
-var continueButton = document.getElementById("continue");
 var gameInstructions = document.getElementById("gameinstructions");
+var continueButton = document.getElementById("continue");
+var gameControls = document.getElementById("gamecontrols");
+gameControls.style.display="none";
 gameInstructions.style.display="none";
 pause.style.display="none";
 
@@ -77,13 +80,13 @@ function init ()
         update();
         movePlayer();
     }
-
+    animate();
     // EVENT LISTENERS
     body.addEventListener('mousemove', mouseCoord);
     function mouseCoord(e){
         mousePos= {
-            x: e.clientX - container.offsetLeft,
-            y: e.clientY - container.offsetTop,
+            x: e.clientX - canvas.offsetLeft,
+            y: e.clientY - canvas.offsetTop,
         }
         return mousePos;
     }
@@ -152,8 +155,14 @@ function init ()
     }
     
     backButton.onclick = function(){
-        gameInstructions.style.display="none";
+        gameInstructions.style.display ="none";
+        gameControls.style.display="none";
         menu.style.display="block";
+    }
+
+    controls.onclick = function(){
+        gameControls.style.display="block";
+        menu.style.display="none";
     }
 
     instructions.onclick = function(){
@@ -163,9 +172,7 @@ function init ()
 
     playButton.onclick = function(){
         menu.style.display="none";
-        
-        animate();
     }
-}
+}  
 document.addEventListener('DOMContentLoaded', init);
 
