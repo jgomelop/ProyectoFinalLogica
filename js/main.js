@@ -47,13 +47,16 @@ const basicEnemyImg = new Image();
 basicEnemyImg.onload = function(){};
 basicEnemyImg.src = 'js/resources/ships/Alien-Scout.png';
 
-function spawnBasicEnemies(){
+function spawnEnemies(){
     setInterval( () => {
         let x;
         let y;
-        let diff = 128;
+        let diff = 128; // tamaño de img de enemigo básico.
         let basicEnemy;
-        let speed = 10;
+        let speed = 10/Math.SQRT2;
+
+        let xFinal = Math.random() * (CANVAS_WIDTH  - 200) + 200;
+        let yFinal = Math.random() * (CANVAS_HEIGHT - 200) + 200;
 
         if (Math.random() < 0.5) {
             x = Math.random() < 0.5 ? 0 - diff : CANVAS_WIDTH + diff;
@@ -63,13 +66,10 @@ function spawnBasicEnemies(){
             y = Math.random() < 0.5 ? 0 - diff : CANVAS_HEIGHT + diff;
         }
 
-        basicEnemy = new Ship(basicEnemyImg,x,y,speed,speed);
-        basicEnemy.xFinal = Math.random() * (CANVAS_WIDTH - 300) + 300;
-        basicEnemy.yFinal = Math.random() * (CANVAS_HEIGHT - 300) + 300;
-
+        basicEnemy = new EnemyShip(basicEnemyImg,x,y,speed,speed,xFinal,yFinal);
         enemies.push(basicEnemy)
 
-    }, 3000)
+    }, 2000)
 }
 
 
@@ -78,8 +78,7 @@ function spawnBasicEnemies(){
 // ============================================================================= //
 function init () 
 {   
-    spawnBasicEnemies();
-    
+
     function update() {
         ctx.clearRect(0,0,CANVAS_WIDTH,CANVAS_HEIGHT);
         ctx.setTransform(1,0,0,1,0,0);
@@ -117,10 +116,23 @@ function init ()
             x: player.x,
             y: player.y,
         }
-        for (let i = 0; i < enemies.length; i++) {
-            let enemy = enemies[i];
-            enemy.rotateShip(ctx,target);
+        if (enemies)
+        {
+            for (let i = 0; i < enemies.length; i++) {
+                let enemy = enemies[i];
+                let epsilon = 5; // radio de error para la resta
+                let diffs = (Math.abs(enemy.x - enemy.xFinal) > epsilon) && 
+                            (Math.abs(enemy.y - enemy.yFinal) > epsilon);
+                ctx.setTransform(1,0,0,1,0,0);
+                enemy.rotateShip(ctx,target);
+
+                if (diffs)
+                {
+                    enemy.move();
+                }
+            }
         }
+        
     }
 
     function animate(){
@@ -214,7 +226,7 @@ function init ()
 
     playButton.onclick = function(){
         menu.style.display="none";
-        
+        spawnEnemies();
         animate();
     }
 }
