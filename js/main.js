@@ -29,7 +29,6 @@ gameControls.style.display="none";
 gameReferences.style.display="none";
 pause.style.display="none";
 
-
 var animation;
 var mousePos;
 var keys = new Array(); // Array para las teclas.
@@ -185,15 +184,6 @@ function init ()
     function playerShoot(e){
         mousePos = mouseCoord(e);
 
-        const SPEED = 3/Math.SQRT2; // Rapidez en una dimensión
-
-        // Vector diferencia entre posición de disparo  y posición del mouse.
-        /*const X_DIFF = mousePos.x - player.x;
-        const Y_DIFF = mousePos.y - player.y;
-        const R_MAGNITUDE = Math.sqrt(X_DIFF*X_DIFF + Y_DIFF*Y_DIFF);
-        const X_DIRECTION = X_DIFF/R_MAGNITUDE;
-        const Y_DIRECTION = Y_DIFF/R_MAGNITUDE;*/
-    
         const Y0 = player.y;
         const X0 = player.x;
         const shootAngle= Math.atan2(mousePos.y - Y0, mousePos.x - X0);
