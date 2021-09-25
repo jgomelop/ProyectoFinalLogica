@@ -41,7 +41,7 @@ class Projectile extends Point
         this.#isAlive = value;
     }
 
-    drawBullets(ctx){
+    drawBullet(ctx){
         const IMG_WIDTH = this.#scale*this.#img.width;
         const IMG_HEIGHT = this.#scale*this.#img.height;
 

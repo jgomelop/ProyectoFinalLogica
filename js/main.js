@@ -52,51 +52,80 @@ var playerBullets = new Array();
 // ====================================================================== //
 // ENEMIGOS
 //======================================================================= //
-var enemies = new Array();
-// Naves básicas
+// imagen de la nave enemiga
 const basicEnemyImg = new Image();
 basicEnemyImg.onload = function(){};
 basicEnemyImg.src = 'js/resources/ships/Alien-Scout.png';
+// imagen de las balas enemigas
+const enemyBulletImg = new Image();
+enemyBulletImg.onload = function(){};
+enemyBulletImg.src = 'js/resources/proyectiles/bala-enemiga.png';
 
-function generateRandom(min, max) {
-    return Math.random() * (max - min) + min;
-}
+var enemies = new Array();
 
+var enemiesBullets = new Array();
+
+// Arreglo para guardar los temporizadores de disparo para cada enemigo  
+var intervals = new Array(); 
+
+// Lógica de spawn de enemigos
+var intervalEnemiesSpawn;
 function spawnEnemies(){
-    setInterval( () => {
-        let diff = 50; // tamaño de img de enemigo básico.
-        let dw = 1/5*CANVAS_WIDTH;
-        let dh = 1/5*CANVAS_HEIGHT;
+    function generateRandom(min, max) {
+        return Math.random() * (max - min) + min;
+    }
+ 
+    let diff = 50; // tamaño de img de enemigo básico.
+    let dw = 1/5*CANVAS_WIDTH;
+    let dh = 1/5*CANVAS_HEIGHT;
+    const speed = 3/Math.SQRT2; // Rapidez en una dimensión
+    // Vector diferencia entre posición de disparo  y posición del mouse.
+    
+    let xf = generateRandom(dw,CANVAS_WIDTH - dw); 
+    let yf = generateRandom(dh,CANVAS_HEIGHT - dh); 
+    let x0;
+    let y0;
+    if (Math.random() < 0.5) {
+        x0 = Math.random() < 0.5 ? 0 - diff : CANVAS_WIDTH + diff;
+        y0 = Math.random() * CANVAS_HEIGHT;
+    } else {
+        x0 = Math.random() * CANVAS_WIDTH;
+        y0 = Math.random() < 0.5 ? 0 - diff : CANVAS_HEIGHT + diff;
+    }
+    const x_diff = xf - x0;
+    const y_diff = yf - y0 ;
+    const r_magnitude= Math.sqrt(x_diff*x_diff + y_diff*y_diff);
+    const x_dir = x_diff/r_magnitude;
+    const y_dir = y_diff/r_magnitude;
+    const vx = x_dir*speed;
+    const vy = y_dir*speed;
 
-        const speed = 3/Math.SQRT2; // Rapidez en una dimensión
-        // Vector diferencia entre posición de disparo  y posición del mouse.
-        
-        let xf = generateRandom(dw,CANVAS_WIDTH - dw); 
-        let yf = generateRandom(dh,CANVAS_HEIGHT - dh); 
-        let x0;
-        let y0;
+    let enemy = new EnemyShip(basicEnemyImg,x0,y0,vx,vy,xf,yf);
+    
+    enemies.push(enemy); // añadiendo enemigo al array de enemigos
+    
+    // añadiendo tiempo de disparo al array de intervalos
+    function shootPlayer(enemy){
+        intervals.push( setInterval( () => {
+            const shootAngle= Math.atan2(player.y - enemy.y, player.x - enemy.x);
+            const v = 4; // rapidez bala enemiga
+            const vx = Math.cos(shootAngle)*v;
+            const vy = Math.sin(shootAngle)*v;
 
-        if (Math.random() < 0.5) {
-            x0 = Math.random() < 0.5 ? 0 - diff : CANVAS_WIDTH + diff;
-            y0 = Math.random() * CANVAS_HEIGHT;
-        } else {
-            x0 = Math.random() * CANVAS_WIDTH;
-            y0 = Math.random() < 0.5 ? 0 - diff : CANVAS_HEIGHT + diff;
-        }
+            let bullet = new Projectile(enemyBulletImg,enemy.x,enemy.y,vx,vy);
+            bullet.xFinal = player.x;
+            bullet.yFinal = player.y;
+            // añadiendo imagen a la bala enemiga
+            bullet.img = enemyBulletImg;
 
-        const x_diff = xf - x0;
-        const y_diff = yf - y0 ;
-        const r_magnitude= Math.sqrt(x_diff*x_diff + y_diff*y_diff);
-        const x_dir = x_diff/r_magnitude;
-        const y_dir = y_diff/r_magnitude;
-        const vx = x_dir*speed;
-        const vy = y_dir*speed;
-
-        let enemy = new EnemyShip (basicEnemyImg,x0,y0,vx,vy,xf,yf);
-        enemies.push(enemy);
-
-    }, 5000)
+            // Agregando bala al array de las balas enemigas
+            enemiesBullets.push(bullet);
+        }, 1000)
+        )
+    }
+    //shootPlayer(enemy);
 }
+
 
 
 // ============================================================================= //
@@ -113,7 +142,7 @@ function init ()
 
     function drawAll() {
 
-        // Drawing Player Ship
+        // Dibujando nave del jugador
         if (mousePos){
             player.rotateShip(ctx,mousePos);
             ctx.resetTransform();
@@ -123,14 +152,14 @@ function init ()
             ctx.resetTransform();
         }
 
-        // Drawing bullets
+        // Dibujando balas del jugador
         if (playerBullets){
             for (let i = 0; i < playerBullets.length; i++){
                 let bullet = playerBullets[i];
                 if (bullet.isAlive){
                     //ctx.setTransform(1,0,0,1,0,0);
                     ctx.globalCompositeOperation = 'destination-over';
-                    bullet.drawBullets(ctx);
+                    bullet.drawBullet(ctx);
                     bullet.move();
                     ctx.resetTransform();
                 }else{
@@ -139,7 +168,7 @@ function init ()
             }
         }
 
-        //Dibujando enemigos básicos
+        //Dibujando enemigos
         if (enemies)
         {
             for (let i = 0; i < enemies.length; i++) {
@@ -152,10 +181,25 @@ function init ()
                 enemy.move();
 
                 ctx.resetTransform();
-
             }
         }
-        
+
+        // Dibujando balas enemigas
+
+        if (enemiesBullets)
+        {
+            for (let i = 0; i < enemiesBullets.length; i++) {
+                let bullet = enemiesBullets[i];
+                if (bullet.isAlive){
+                    ctx.globalCompositeOperation = 'destination-over';
+                    bullet.drawBullet(ctx);
+                    bullet.move();
+                    ctx.resetTransform();
+                } else{
+                    enemiesBullets.splice(i,1)
+                }
+            }
+        }
     }
 
     function animate(){
@@ -195,7 +239,6 @@ function init ()
         // pushing bullet to playerBullets array
         playerBullets.push(bullet);
     }
-
  
     body.addEventListener("keydown", pressKey);
     function pressKey(e){
@@ -258,7 +301,7 @@ function init ()
 
     playButton.onclick = function(){
         menu.style.display="none";
-        spawnEnemies();
+        intervalEnemiesSpawn = setInterval( spawnEnemies, 2000);
         animate();
     }
 }  

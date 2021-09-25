@@ -111,8 +111,20 @@ class EnemyShip extends Point
         ctx.setTransform(1,0,0,1,0,0);
     }
 
-    aimPlayer(ctx,player)
+    shootPlayer(enemyBulletImg,player,enemiesBullets)
     {
-        this.rotateShip(ctx,player)
+        const shootAngle= Math.atan2(player.y - super.y, player.x - super.x);
+        const v = 4; // rapidez bala enemiga
+        const vx = Math.cos(shootAngle)*v;
+        const vy = Math.sin(shootAngle)*v;
+
+        let bullet = new Projectile(enemyBulletImg,super.x,super.y,vx,vy);
+        bullet.xFinal = player.x;
+        bullet.yFinal = player.y;
+        // añadiendo imagen a la bala enemiga
+        bullet.img = enemyBulletImg;
+
+        // Agregando bala al array de las balas enemigas
+        enemiesBullets.push(bullet);
     }
 }
