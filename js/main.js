@@ -72,31 +72,31 @@ function spawnEnemies(){
 
         const speed = 3/Math.SQRT2; // Rapidez en una dimensión
         // Vector diferencia entre posición de disparo  y posición del mouse.
-        const x_diff = CANVAS_WIDTH - CANVAS_WIDTH/2;
-        const y_diff = CANVAS_HEIGHT - CANVAS_HEIGHT/2;
+        
+        let xf = CANVAS_WIDTH/2; 
+        let yf = CANVAS_HEIGHT/2;
+        let x0;
+        let y0;
+
+        if (Math.random() < 0.5) {
+            x0 = Math.random() < 0.5 ? 0 - diff : CANVAS_WIDTH + diff;
+            y0 = Math.random() * CANVAS_HEIGHT;
+        } else {
+            x0 = Math.random() * CANVAS_WIDTH;
+            y0 = Math.random() < 0.5 ? 0 - diff : CANVAS_HEIGHT + diff;
+        }
+
+        const x_diff = xf - x0;
+        const y_diff = yf - y0 ;
         const r_magnitude= Math.sqrt(x_diff*x_diff + y_diff*y_diff);
         const x_dir = x_diff/r_magnitude;
         const y_dir = y_diff/r_magnitude;
         const vx = x_dir*speed;
         const vy = y_dir*speed;
 
-        let x0 = 0;
-        let y0 = 0;
-
-        //if (Math.random() < 0.5) {
-        //    x0 = Math.random() < 0.5 ? 0 - diff : CANVAS_WIDTH + diff;
-        //    y0 = Math.random() * CANVAS_HEIGHT;
-        //} else {
-        //    x0 = Math.random() * CANVAS_WIDTH;
-        //    y0 = Math.random() < 0.5 ? 0 - diff : CANVAS_HEIGHT + diff;
-        //}
-        
-        enemy = new EnemyShip(basicEnemyImg,0,0,vx,vy,CANVAS_WIDTH/2,CANVAS_HEIGHT/2);
-
-        //enemy = new Ship(basicEnemyImg,0,0,vx,vy);
-        //enemy.xFinal = CANVAS_WIDTH/2;
-        //enemy.yFinal = CANVAS_HEIGHT/2;
-
+        enemy = new EnemyShip (basicEnemyImg,x0,y0,
+                                    vx,vy,
+                                    CANVAS_WIDTH,CANVAS_HEIGHT);
         enemies.push(enemy);
 
     }, 2000)
