@@ -86,8 +86,7 @@ function spawnEnemies(){
         //    y = Math.random() < 0.5 ? 0 - diff : CANVAS_HEIGHT + diff;
         //}
 
-        ctx.resetTransform();
-        basicEnemy = new EnemyShip (basicEnemyImg,CANVAS_WIDTH/2,CANVAS_HEIGHT/2,
+        enemy = new EnemyShip (basicEnemyImg,CANVAS_WIDTH/2,CANVAS_HEIGHT/2,
                                     x_dir*speed,y_dir*speed,
                                     CANVAS_WIDTH,CANVAS_HEIGHT);
         enemies.push(basicEnemy);
