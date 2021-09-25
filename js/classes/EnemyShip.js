@@ -2,17 +2,11 @@ class EnemyShip extends Ship
 {   
     #xFinal;
     #yFinal;
-    constructor(img,x,y,vx,vy,xFinal,yFinal,fireRate,lifePoints,isAlive,scale)
+    constructor(img,x,y,vx,vy,xFinal,yFinal,angle,fireRate,lifePoints,isAlive,scale)
     {
-        super(img,x,y,vx,vy,fireRate,lifePoints,isAlive,scale);
+        super(img,x,y,vx,vy,angle,fireRate,lifePoints,isAlive,scale);
         this.#xFinal = xFinal;
         this.#yFinal = yFinal;
-
-        let xSign = Math.sign(this.#xFinal - super.x);
-        let ySign = Math.sign(this.#yFinal - super.y);
-
-        super.vx = xSign*vx/Math.SQRT2;
-        super.vy = ySign*vy/Math.SQRT2;
     }
 
     get xFinal()
@@ -35,8 +29,16 @@ class EnemyShip extends Ship
 
     move()
     {
-        super.x += super.vx;
-        super.y += super.vy;
+        let xDistance = Math.abs(super.x - this.#xFinal);
+        let yDistance = Math.abs(super.y - this.#yFinal);
+        let distanceToFinalPoint = Math.sqrt(xDistance*xDistance + yDistance*yDistance)
+        const DIFF_ERROR_RADIOUS = 5;
+
+        if (distanceToFinalPoint > DIFF_ERROR_RADIOUS) {
+            super.x += super.vx;
+            super.y += super.vy;
+        }
+
     }
 
     aimPlayer(ctx,player)

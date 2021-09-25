@@ -59,27 +59,38 @@ const basicEnemyImg = new Image();
 basicEnemyImg.onload = function(){};
 basicEnemyImg.src = 'js/resources/ships/Alien-Scout.png';
 
+function generateRandom(min, max) {
+    return Math.random() * (max - min) + min;
+}
+
 function spawnEnemies(){
     setInterval( () => {
-        let x;
-        let y;
-        let diff = 128; // tamaño de img de enemigo básico.
+        let diff = 50; // tamaño de img de enemigo básico.
         let basicEnemy;
-        let speed = 10/Math.SQRT2;
+        let dw = 1/3*CANVAS_WIDTH;
+        let dh = 1/3*CANVAS_HEIGHT;
 
-        let xFinal = Math.random() * (CANVAS_WIDTH  - 200) + 200;
-        let yFinal = Math.random() * (CANVAS_HEIGHT - 200) + 200;
+        const speed = 3/Math.SQRT2; // Rapidez en una dimensión
+        // Vector diferencia entre posición de disparo  y posición del mouse.
+        const x_diff = CANVAS_WIDTH - CANVAS_WIDTH/2;
+        const y_diff = CANVAS_HEIGHT - CANVAS_HEIGHT/2;
+        const r_magnitude= Math.sqrt(x_diff*x_diff + y_diff*y_diff);
+        const x_dir = x_diff/r_magnitude;
+        const y_dir = y_diff/r_magnitude;
 
-        if (Math.random() < 0.5) {
-            x = Math.random() < 0.5 ? 0 - diff : CANVAS_WIDTH + diff;
-            y = Math.random() * CANVAS_HEIGHT;
-        } else {
-            x = Math.random() * CANVAS_WIDTH;
-            y = Math.random() < 0.5 ? 0 - diff : CANVAS_HEIGHT + diff;
-        }
+        //if (Math.random() < 0.5) {
+        //    x = Math.random() < 0.5 ? 0 - diff : CANVAS_WIDTH + diff;
+        //    y = Math.random() * CANVAS_HEIGHT;
+        //} else {
+        //    x = Math.random() * CANVAS_WIDTH;
+        //    y = Math.random() < 0.5 ? 0 - diff : CANVAS_HEIGHT + diff;
+        //}
 
-        basicEnemy = new EnemyShip(basicEnemyImg,x,y,speed,speed,xFinal,yFinal);
-        enemies.push(basicEnemy)
+        ctx.resetTransform();
+        basicEnemy = new EnemyShip (basicEnemyImg,CANVAS_WIDTH/2,CANVAS_HEIGHT/2,
+                                    x_dir*speed,y_dir*speed,
+                                    CANVAS_WIDTH,CANVAS_HEIGHT);
+        enemies.push(basicEnemy);
 
     }, 2000)
 }
@@ -93,7 +104,8 @@ function init ()
 
     function update() {
         ctx.clearRect(0,0,CANVAS_WIDTH,CANVAS_HEIGHT);
-        ctx.setTransform(1,0,0,1,0,0);
+        ctx.resetTransform();
+        //ctx.setTransform(1,0,0,1,0,0);
         drawAll();
     }
 
@@ -102,10 +114,11 @@ function init ()
         // Drawing Player Ship
         if (mousePos){
             player.rotateShip(ctx,mousePos);
-            //ctx.setTransform(1,0,0,1,0,0);
+            ctx.resetTransform();
+
         }else{
             player.drawShip(ctx);
-            //ctx.setTransform(1,0,0,1,0,0);
+            ctx.resetTransform();
         }
 
         // Drawing bullets
@@ -113,10 +126,11 @@ function init ()
             for (let i = 0; i < playerBullets.length; i++){
                 let bullet = playerBullets[i];
                 if (bullet.isAlive){
-                    ctx.setTransform(1,0,0,1,0,0);
+                    //ctx.setTransform(1,0,0,1,0,0);
                     //ctx.globalCompositeOperation = 'destination-over';
                     bullet.drawBullets(ctx);
                     bullet.move();
+                    ctx.resetTransform();
                 }else{
                     playerBullets.splice(i,1)
                 }
@@ -124,24 +138,21 @@ function init ()
         }
 
         //Drawing enemies
-        let target = {
-            x: player.x,
-            y: player.y,
-        }
         if (enemies)
         {
             for (let i = 0; i < enemies.length; i++) {
                 let enemy = enemies[i];
-                let epsilon = 5; // radio de error para la resta
-                let diffs = (Math.abs(enemy.x - enemy.xFinal) > epsilon) && 
-                            (Math.abs(enemy.y - enemy.yFinal) > epsilon);
-                ctx.setTransform(1,0,0,1,0,0);
-                enemy.rotateShip(ctx,target);
-
-                if (diffs)
-                {
-                    enemy.move();
+                target = {
+                    x: player.x,
+                    y: player.y,
                 }
+                //enemy.rotateShip(ctx,target);
+                //enemy.move();
+                enemy.drawShip(ctx);
+                enemy.move();
+
+                ctx.resetTransform();
+
             }
         }
         
@@ -167,7 +178,7 @@ function init ()
     function playerShoot(e){
         mousePos = mouseCoord(e);
 
-        const SPEED = 10/Math.SQRT2; // Rapidez en una dimensión
+        const SPEED = 3/Math.SQRT2; // Rapidez en una dimensión
 
         // Vector diferencia entre posición de disparo  y posición del mouse.
         const X_DIFF = mousePos.x - player.x;
