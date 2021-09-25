@@ -80,7 +80,7 @@ class EnemyShip extends Point
         let xDistance = Math.abs(super.x - this.#xFinal);
         let yDistance = Math.abs(super.y - this.#yFinal);
         let distanceToFinalPoint = Math.sqrt(xDistance*xDistance + yDistance*yDistance)
-        const DIFF_ERROR_RADIOUS = 5;
+        const DIFF_ERROR_RADIOUS = 10;
 
         if (distanceToFinalPoint > DIFF_ERROR_RADIOUS) {
             super.x += super.vx;

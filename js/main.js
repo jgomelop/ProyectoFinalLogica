@@ -66,15 +66,14 @@ function generateRandom(min, max) {
 function spawnEnemies(){
     setInterval( () => {
         let diff = 50; // tamaño de img de enemigo básico.
-        let basicEnemy;
-        let dw = 1/3*CANVAS_WIDTH;
-        let dh = 1/3*CANVAS_HEIGHT;
+        let dw = 1/4*CANVAS_WIDTH;
+        let dh = 1/4*CANVAS_HEIGHT;
 
         const speed = 3/Math.SQRT2; // Rapidez en una dimensión
         // Vector diferencia entre posición de disparo  y posición del mouse.
         
-        let xf = CANVAS_WIDTH/2; 
-        let yf = CANVAS_HEIGHT/2;
+        let xf = generateRandom(dw,CANVAS_WIDTH - dw); 
+        let yf = generateRandom(dh,CANVAS_HEIGHT - dh); 
         let x0;
         let y0;
 
@@ -94,9 +93,7 @@ function spawnEnemies(){
         const vx = x_dir*speed;
         const vy = y_dir*speed;
 
-        enemy = new EnemyShip (basicEnemyImg,x0,y0,
-                                    vx,vy,
-                                    CANVAS_WIDTH,CANVAS_HEIGHT);
+        let enemy = new EnemyShip (basicEnemyImg,x0,y0,vx,vy,xf,yf);
         enemies.push(enemy);
 
     }, 2000)
@@ -112,7 +109,6 @@ function init ()
     function update() {
         ctx.clearRect(0,0,CANVAS_WIDTH,CANVAS_HEIGHT);
         ctx.resetTransform();
-        //ctx.setTransform(1,0,0,1,0,0);
         drawAll();
     }
 
@@ -133,7 +129,6 @@ function init ()
             for (let i = 0; i < playerBullets.length; i++){
                 let bullet = playerBullets[i];
                 if (bullet.isAlive){
-                    //ctx.setTransform(1,0,0,1,0,0);
                     //ctx.globalCompositeOperation = 'destination-over';
                     bullet.drawBullets(ctx);
                     bullet.move();
@@ -144,7 +139,7 @@ function init ()
             }
         }
 
-        //Drawing enemies
+        //Dibujando enemigos básicos
         if (enemies)
         {
             for (let i = 0; i < enemies.length; i++) {
@@ -153,9 +148,7 @@ function init ()
                     x: player.x,
                     y: player.y,
                 }
-                //enemy.rotateShip(ctx,target);
-                //enemy.move();
-                enemy.drawShip(ctx);
+                enemy.rotateShip(ctx,target);
                 enemy.move();
 
                 ctx.resetTransform();
