@@ -51,7 +51,7 @@ class Projectile extends Point
         ctx.drawImage(this.#img, drawX0, drawY0,IMG_WIDTH,IMG_HEIGHT); 
     }
 
-    move(){
+    /*move(){
 
         let xDistance = Math.abs(super.x - this.#xFinal);
         let yDistance = Math.abs(super.y - this.#yFinal);
@@ -65,6 +65,11 @@ class Projectile extends Point
             this.#isAlive = false;
         }
         
+    }*/
+
+    move(){
+        super.x = super.x + super.vx;
+        super.y = super.y + super.vy;
     }
 
     explode(canvasWidth, canvasHeight){

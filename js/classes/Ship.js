@@ -5,7 +5,9 @@ class Ship extends Point
     #lifePoints;
     #isAlive;
     #img;
-    #scale; 
+    #scale;
+    #cannonPosition;
+
     constructor(img,x,y,vx,vy)
     {
         super(x,y,vx,vy);
@@ -34,6 +36,14 @@ class Ship extends Point
     }
     get img (){
         return this.#img;
+    }
+
+    get cannonPosition(){
+        return this.#cannonPosition;
+    }
+
+    set cannonPosition(value){
+        this.#cannonPosition = value;
     }
 
     set angle(value){

@@ -41,7 +41,7 @@ var keys = new Array(); // Array para las teclas.
 const playerImage = new Image();
 playerImage.src = 'js/resources/ships/player_ship.png';
 playerImage.onload = function(){};
-var player = new Ship(playerImage,CANVAS_WIDTH/2,CANVAS_HEIGHT/2,5,5);
+var player = new Ship(playerImage,CANVAS_WIDTH/2,CANVAS_HEIGHT/2,3/Math.SQRT2,3/Math.SQRT2);
 
 const playerBulletImg = new Image();
 playerBulletImg.src= 'js/resources/proyectiles/bala-jugador.png';
@@ -96,7 +96,7 @@ function spawnEnemies(){
         let enemy = new EnemyShip (basicEnemyImg,x0,y0,vx,vy,xf,yf);
         enemies.push(enemy);
 
-    }, 2000)
+    }, 5000)
 }
 
 
@@ -129,7 +129,8 @@ function init ()
             for (let i = 0; i < playerBullets.length; i++){
                 let bullet = playerBullets[i];
                 if (bullet.isAlive){
-                    //ctx.globalCompositeOperation = 'destination-over';
+                    ctx.setTransform(1,0,0,1,0,0);
+                    ctx.globalCompositeOperation = 'destination-over';
                     bullet.drawBullets(ctx);
                     bullet.move();
                     ctx.resetTransform();
@@ -164,6 +165,12 @@ function init ()
         movePlayer();
     }
     animate();
+
+    /*function wallColotion(){
+        let rightPos = player.x + player.x/2;
+        let
+    }*/
+
     // EVENT LISTENERS
     body.addEventListener('mousemove', mouseCoord);
     function mouseCoord(e){
@@ -181,13 +188,19 @@ function init ()
         const SPEED = 3/Math.SQRT2; // Rapidez en una dimensión
 
         // Vector diferencia entre posición de disparo  y posición del mouse.
-        const X_DIFF = mousePos.x - player.x;
+        /*const X_DIFF = mousePos.x - player.x;
         const Y_DIFF = mousePos.y - player.y;
         const R_MAGNITUDE = Math.sqrt(X_DIFF*X_DIFF + Y_DIFF*Y_DIFF);
         const X_DIRECTION = X_DIFF/R_MAGNITUDE;
-        const Y_DIRECTION = Y_DIFF/R_MAGNITUDE;
+        const Y_DIRECTION = Y_DIFF/R_MAGNITUDE;*/
+    
+        const Y0 = player.y;
+        const X0 = player.x;
+        const shootAngle= Math.atan2(mousePos.y - Y0, mousePos.x - X0);
+        const vx = Math.cos(shootAngle)*4;
+        const vy= Math.sin(shootAngle)*4;
 
-        let bullet = new Projectile(playerBulletImg,player.x,player.y,X_DIRECTION*SPEED,Y_DIRECTION*SPEED);
+        let bullet = new Projectile(playerBulletImg,X0,Y0,vx,vy);
         bullet.xFinal = mousePos.x;
         bullet.yFinal = mousePos.y;
 
