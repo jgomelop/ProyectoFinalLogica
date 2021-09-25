@@ -65,8 +65,8 @@ function generateRandom(min, max) {
 function spawnEnemies(){
     setInterval( () => {
         let diff = 50; // tamaño de img de enemigo básico.
-        let dw = 1/4*CANVAS_WIDTH;
-        let dh = 1/4*CANVAS_HEIGHT;
+        let dw = 1/5*CANVAS_WIDTH;
+        let dh = 1/5*CANVAS_HEIGHT;
 
         const speed = 3/Math.SQRT2; // Rapidez en una dimensión
         // Vector diferencia entre posición de disparo  y posición del mouse.
@@ -128,7 +128,7 @@ function init ()
             for (let i = 0; i < playerBullets.length; i++){
                 let bullet = playerBullets[i];
                 if (bullet.isAlive){
-                    ctx.setTransform(1,0,0,1,0,0);
+                    //ctx.setTransform(1,0,0,1,0,0);
                     ctx.globalCompositeOperation = 'destination-over';
                     bullet.drawBullets(ctx);
                     bullet.move();
@@ -165,11 +165,6 @@ function init ()
     }
     animate();
 
-    /*function wallColotion(){
-        let rightPos = player.x + player.x/2;
-        let
-    }*/
-
     // EVENT LISTENERS
     body.addEventListener('mousemove', mouseCoord);
     function mouseCoord(e){
@@ -200,6 +195,7 @@ function init ()
         // pushing bullet to playerBullets array
         playerBullets.push(bullet);
     }
+
  
     body.addEventListener("keydown", pressKey);
     function pressKey(e){
