@@ -75,7 +75,7 @@ function init ()
                 let bullet = playerBullets[i];
                 if (bullet.isAlive){
                     ctx.setTransform(1,0,0,1,0,0);
-                    //ctx.globalCompositeOperation = 'destination-over';
+                    ctx.globalCompositeOperation = 'destination-over';
                     bullet.drawBullets(ctx);
                     bullet.move();
                 }else{
@@ -91,6 +91,12 @@ function init ()
         movePlayer();
     }
     animate();
+
+    /*function wallColotion(){
+        let rightPos = player.x + player.x/2;
+        let
+    }*/
+
     // EVENT LISTENERS
     body.addEventListener('mousemove', mouseCoord);
     function mouseCoord(e){
@@ -105,16 +111,22 @@ function init ()
     function playerShoot(e){
         mousePos = mouseCoord(e);
 
-        const SPEED = 10/Math.SQRT2; // Rapidez en una dimensión
+        /**const SPEED = 10/Math.SQRT2; // Rapidez en una dimensión
 
         // Vector diferencia entre posición de disparo  y posición del mouse.
-        const X_DIFF = mousePos.x - player.x;
+        /*const X_DIFF = mousePos.x - player.x;
         const Y_DIFF = mousePos.y - player.y;
         const R_MAGNITUDE = Math.sqrt(X_DIFF*X_DIFF + Y_DIFF*Y_DIFF);
         const X_DIRECTION = X_DIFF/R_MAGNITUDE;
-        const Y_DIRECTION = Y_DIFF/R_MAGNITUDE;
+        const Y_DIRECTION = Y_DIFF/R_MAGNITUDE;*/
+    
+        const Y0 = player.y;
+        const X0 = player.x;
+        const shootAngle= Math.atan2(mousePos.y - Y0, mousePos.x - X0);
+        const vx = Math.cos(shootAngle)*4;
+        const vy= Math.sin(shootAngle)*4;
 
-        let bullet = new Projectile(playerBulletImg,player.x,player.y,X_DIRECTION*SPEED,Y_DIRECTION*SPEED);
+        let bullet = new Projectile(playerBulletImg,X0,Y0,vx,vy);
         bullet.xFinal = mousePos.x;
         bullet.yFinal = mousePos.y;
 
