@@ -78,7 +78,6 @@ function spawnEnemies(){
     let diff = 50; // tamaño de img de enemigo básico.
     let dw = 1/5*CANVAS_WIDTH;
     let dh = 1/5*CANVAS_HEIGHT;
-    const speed = 3/Math.SQRT2; // Rapidez en una dimensión
     // Vector diferencia entre posición de disparo  y posición del mouse.
     
     let xf = generateRandom(dw,CANVAS_WIDTH - dw); 
@@ -97,8 +96,9 @@ function spawnEnemies(){
     const r_magnitude= Math.sqrt(x_diff*x_diff + y_diff*y_diff);
     const x_dir = x_diff/r_magnitude;
     const y_dir = y_diff/r_magnitude;
-    const vx = x_dir*speed;
-    const vy = y_dir*speed;
+    const v = 2/Math.SQRT2; // Rapidez en una dimensión
+    const vx = x_dir*v;
+    const vy = y_dir*v;
 
     let enemy = new EnemyShip(basicEnemyImg,x0,y0,vx,vy,xf,yf);
     
@@ -108,7 +108,7 @@ function spawnEnemies(){
     function shootPlayer(enemy){
         intervals.push( setInterval( () => {
             const shootAngle= Math.atan2(player.y - enemy.y, player.x - enemy.x);
-            const v = 4; // rapidez bala enemiga
+            const v = 3; // rapidez bala enemiga
             const vx = Math.cos(shootAngle)*v;
             const vy = Math.sin(shootAngle)*v;
 
@@ -120,10 +120,10 @@ function spawnEnemies(){
 
             // Agregando bala al array de las balas enemigas
             enemiesBullets.push(bullet);
-        }, 1000)
+        }, enemy.fireRate*1000)
         )
     }
-    //shootPlayer(enemy);
+    shootPlayer(enemy);
 }
 
 
