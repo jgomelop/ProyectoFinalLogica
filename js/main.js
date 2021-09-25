@@ -91,9 +91,11 @@ function spawnEnemies(){
         const r_magnitude= Math.sqrt(x_diff*x_diff + y_diff*y_diff);
         const x_dir = x_diff/r_magnitude;
         const y_dir = y_diff/r_magnitude;
+        const vx = x_dir*speed;
+        const vy = y_dir*speed;
 
         enemy = new EnemyShip (basicEnemyImg,x0,y0,
-                                    x_dir*speed,y_dir*speed,
+                                    vx,vy,
                                     CANVAS_WIDTH,CANVAS_HEIGHT);
         enemies.push(enemy);
 
