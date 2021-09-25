@@ -5,12 +5,12 @@ class Point
     #vx; 
     #vy;
 
-    constructor (x,y,vx,vy) 
+    constructor(x,y,vx,vy) 
     {
-        this.#x = x || 500;
-        this.#y = y || 250;
-        this.#vx = vx || 20;
-        this.vy = vy || 20;
+        this.#x = x;
+        this.#y = y;
+        this.#vx = vx;
+        this.#vy = vy;
     }
 
     /**
@@ -29,10 +29,10 @@ class Point
         return this.#vy;
     }
 
-    set x (value){
+    set x(value){
         this.#x = value;
     }
-    set y (value){
+    set y(value){
         this.#y = value;
     }
     set vx (value){

@@ -1,22 +1,43 @@
-class Ship extends Point
-{
-    #angle; 
+class EnemyShip extends Point
+{   
+    #xFinal;
+    #yFinal;
+    #angle;
     #fireRate;
     #lifePoints;
     #isAlive;
-    #img;
     #scale;
-    #cannonPosition;
-
-    constructor(img,x,y,vx,vy)
+    #img;
+    
+    constructor(img,x,y,vx,vy,xFinal,yFinal)
     {
         super(x,y,vx,vy);
+        this.#xFinal = xFinal;
+        this.#yFinal = yFinal;
         this.#angle = 0;
         this.#fireRate = 1;
         this.#lifePoints = 20;
         this.#isAlive = true;
         this.#img = img;
         this.#scale = .5;
+    }
+
+    get xFinal()
+    {
+        return this.#xFinal;
+    }
+    get yFinal()
+    {
+        return this.#yFinal;
+    }
+
+    set xFinal(value)
+    {
+        this.#xFinal = value;
+    }
+    set yFinal(value)
+    {
+        this.#yFinal = value;
     }
 
     get angle(){
@@ -38,14 +59,6 @@ class Ship extends Point
         return this.#img;
     }
 
-    get cannonPosition(){
-        return this.#cannonPosition;
-    }
-
-    set cannonPosition(value){
-        this.#cannonPosition = value;
-    }
-
     set angle(value){
         this.#angle = value;
     }
@@ -61,7 +74,21 @@ class Ship extends Point
     set scale(value){
         this.#scale = value;
     }
-    
+
+    move()
+    {
+        let xDistance = Math.abs(super.x - this.#xFinal);
+        let yDistance = Math.abs(super.y - this.#yFinal);
+        let distanceToFinalPoint = Math.sqrt(xDistance*xDistance + yDistance*yDistance)
+        const DIFF_ERROR_RADIOUS = 10;
+
+        if (distanceToFinalPoint > DIFF_ERROR_RADIOUS) {
+            super.x += super.vx;
+            super.y += super.vy;
+        }
+
+    }
+
     drawShip(ctx){
 
         const IMG_WIDTH = this.#scale*this.#img.width;
@@ -82,5 +109,10 @@ class Ship extends Point
         ctx.translate(-X0, -Y0);
         this.drawShip(ctx);
         ctx.setTransform(1,0,0,1,0,0);
+    }
+
+    aimPlayer(ctx,player)
+    {
+        this.rotateShip(ctx,player)
     }
 }
