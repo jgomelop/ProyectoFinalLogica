@@ -1,3 +1,12 @@
+function isBulletOutsideCanvas(bullet,bulletRadius){
+    let cond1 = bullet.x + bulletRadius >= CANVAS_WIDTH;
+    let cond2 = bullet.x - bulletRadius <= 0;
+    let cond3 = bullet.y + bulletRadius >= CANVAS_HEIGHT;
+    let cond4 = bullet.y - bulletRadius <= 0;
+    return cond1 || cond2 || cond3 || cond4;
+}
+
+
 function collisionChecker(ships, bullets,intervals){
     function distance(obj1,obj2){
         let dx = obj2.x - obj1.x;
@@ -6,13 +15,6 @@ function collisionChecker(ships, bullets,intervals){
         let dy2 = Math.pow(dy, 2);
         let d = Math.sqrt(dx2 + dy2);
         return d;
-    }
-    function isBulletOutsideCanvas(bullet,bulletRadius){
-        let cond1 = bullet.x + bulletRadius >= CANVAS_WIDTH;
-        let cond2 = bullet.x - bulletRadius <= 0;
-        let cond3 = bullet.y + bulletRadius >= CANVAS_HEIGHT;
-        let cond4 = bullet.y - bulletRadius <= 0;
-        return cond1 || cond2 || cond3 || cond4;
     }
 
     for(let i=0; i < ships.length; i++){
@@ -52,14 +54,6 @@ function playerCollision(bullets, player){
         let dy2 = Math.pow(dy, 2);
         let d = Math.sqrt(dx2 + dy2);
         return d;
-    }
-
-    function isBulletOutsideCanvas(bullet,bulletRadius){
-        let cond1 = bullet.x + bulletRadius >= CANVAS_WIDTH;
-        let cond2 = bullet.x - bulletRadius <= 0;
-        let cond3 = bullet.y + bulletRadius >= CANVAS_HEIGHT;
-        let cond4 = bullet.y - bulletRadius <= 0;
-        return cond1 || cond2 || cond3 || cond4;
     }
 
     for(let i=0; i < bullets.length; i++){

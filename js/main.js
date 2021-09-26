@@ -306,7 +306,8 @@ function init ()
 
         } else if(e.keyCode===80 && pause.style.display=="block"){
             pause.style.display="none";
-            window.requestAnimationFrame(animate)
+            animation = requestAnimationFrame(animate);
+            intervalEnemiesSpawn = setInterval(spawnEnemies, 2000);
         }
     }
 
