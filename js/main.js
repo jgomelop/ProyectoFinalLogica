@@ -226,8 +226,7 @@ function init ()
         
         update();
         movePlayer();
-        wallCollision(player.x, player.y);
-        
+        playerWallCollision(player.x, player.y);     
     }
 
     // EVENT LISTENERS
