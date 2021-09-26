@@ -161,6 +161,9 @@ function init ()
         ctx.resetTransform();
         collisionChecker(enemies,playerBullets,intervals);
         playerCollision(enemiesBullets, player);
+
+        movePlayer();
+        playerWallCollision(player.x, player.y);
         drawAll();
     }
 
@@ -230,8 +233,13 @@ function init ()
         animation = requestAnimationFrame(animate);
         
         update();
-        movePlayer();
-        playerWallCollision(player.x, player.y);     
+        if(player.lifePoints <= 0){
+            clearInterval(intervalEnemiesSpawn);
+            intervals = null;
+            animation = cancelAnimationFrame(animate);
+            ctx.clearRect(0,0,CANVAS_WIDTH,CANVAS_HEIGHT);
+            loseWindow.style.display="block";
+        }
     }
 
     // EVENT LISTENERS
