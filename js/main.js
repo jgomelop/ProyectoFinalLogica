@@ -77,6 +77,7 @@ function shootPlayer(enemy){
         let bullet = new Projectile(enemyBulletImg,enemy.x,enemy.y,vx,vy);
         bullet.xFinal = player.x;
         bullet.yFinal = player.y;
+        bullet.dps=1;
         // añadiendo imagen a la bala enemiga
         bullet.img = enemyBulletImg;
 
@@ -88,8 +89,8 @@ function shootPlayer(enemy){
 
 function wallCollision(x,y){
 
-    let xPlayer = player.img.width/2;
-    let yPlayer = player.img.width/2;
+    let xPlayer = player.scale*player.img.width/2;
+    let yPlayer = player.scale*player.img.width/2;
 
     if(x + xPlayer >= CANVAS_WIDTH){
         player.x =  CANVAS_WIDTH - xPlayer
@@ -153,7 +154,10 @@ function init ()
     function update() {
         ctx.clearRect(0,0,CANVAS_WIDTH,CANVAS_HEIGHT);
         ctx.resetTransform();
+        vanishBullets(playerBullets);
+        vanishBullets(enemiesBullets);
         collisionChecker(enemies,playerBullets,intervals);
+        playerCollision(enemiesBullets, player);
         drawAll();
     }
 
@@ -295,6 +299,11 @@ function init ()
 
     continueButton.onclick = function(){
         pause.style.display="none";
+    }
+
+    playAgain.onclick = function(){
+        loseWindow.style.display="none";
+        menu.style.display="block";
     }
     
     backButton1.onclick = function(){
