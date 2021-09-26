@@ -16,7 +16,7 @@ class EnemyShip extends Point
         this.#xFinal = xFinal;
         this.#yFinal = yFinal;
         this.#angle = 0;
-        this.#fireRate = 2;
+        this.#fireRate = 1;
         this.#dps = 1;
         this.#lifePoints = 2;
         this.#isAlive = true;

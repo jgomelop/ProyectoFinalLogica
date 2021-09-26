@@ -105,7 +105,7 @@ function shootPlayer(enemy,DPS = 1){
 
         // Agregando bala al array de las balas enemigas
         enemiesBullets.push(bullet);
-    }, 500)
+    }, (1/enemy.fireRate)*1000)
     )
 }
 
@@ -142,10 +142,10 @@ function spawnEnemies(){
 
     let enemy = new EnemyShip(basicEnemyImg,x0,y0,vx,vy,xf,yf);
     
+    shootPlayer(enemy);
     enemies.push(enemy); // añadiendo enemigo al array de enemigos
     
     // añadiendo tiempo de disparo al array de intervalos
-    shootPlayer(enemy);
 }
 
 // IMPLEMENTACIÓN DEL JEFE FINAL
@@ -169,8 +169,8 @@ function spawnBoss(){
     let v0y = v0;
 
     let boss = new EnemyShip(bossImg,CANVAS_WIDTH/2,0,v0x,v0y,CANVAS_WIDTH/2,CANVAS_HEIGHT);
-    boss.lifePoints = 25;
-    boss.fireRate = 0.5;
+    boss.lifePoints = 30;
+    boss.fireRate = 2;
     boss.scale = 1;
 
     shootPlayer(boss,3);
