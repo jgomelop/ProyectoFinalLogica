@@ -50,15 +50,15 @@
 .divs1{
     position: absolute;
     background: url(../js/resources/backgrounds/space-2.jpg);
-    
     margin: auto;
     text-align: center;
-    height: 604px;
-    width: 1004px;
+    height: 600px;
+    width: 1000px;
     background-color: gray;
     margin-top: 5px;
     animation: movement 6s infinite linear normal;
     font-family: 'Press Start 2P', cursive;
+    border: 2px solid #555555;
     
 }
 
@@ -182,10 +182,15 @@
     margin: auto;
     width: 400px;
     height: 200px;
-    background-color: red;
+    background-color: rgba(0, 0, 0, .1);
     text-align: center;
     margin-top: 188px;
     margin-left: 295px;
+}
+
+#center3{
+    margin-top: 65px;
+    margin-bottom: 16px;
 }
 
 #center1{

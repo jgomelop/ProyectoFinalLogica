@@ -228,8 +228,8 @@ function init ()
         update();
         movePlayer();
         wallCollision(player.x, player.y);
+        
     }
-    animate();
 
     // EVENT LISTENERS
     body.addEventListener('mousemove', mouseCoord);
@@ -290,20 +290,24 @@ function init ()
 
     body.onkeydown = function(e){
         if (e.keyCode===80 && pause.style.display=="none"){
-
             pause.style.display="block";
+            window.cancelAnimationFrame(animation);
+
         } else if(e.keyCode===80 && pause.style.display=="block"){
             pause.style.display="none";
+            window.requestAnimationFrame(animate)
         }
     }
 
     continueButton.onclick = function(){
         pause.style.display="none";
+        window.requestAnimationFrame(animate);
+
     }
 
     playAgain.onclick = function(){
         loseWindow.style.display="none";
-        menu.style.display="block";
+        window.location.reload()
     }
     
     backButton1.onclick = function(){

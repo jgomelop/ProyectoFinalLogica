@@ -75,7 +75,8 @@ function playerCollision(bullets, player){
             player.lifePoints -= bullet.dps;
             if(player.lifePoints <= 0){
                 loseWindow.style.display="block";
-                /*body.cancelAnimationFrame(animate);*/
+                player = undefined;
+                //window.cancelAnimationFrame(animate);
             }
             bullets.splice(i,1);
         }
