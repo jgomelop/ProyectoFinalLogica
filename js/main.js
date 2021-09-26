@@ -301,7 +301,7 @@ function init ()
         } else if(e.keyCode===80 && pause.style.display=="block"){
             pause.style.display="none";
             animation = requestAnimationFrame(animate);
-            intervalEnemiesSpawn = setInterval( spawnEnemies, 2000);
+            intervalEnemiesSpawn = setInterval(spawnEnemies, 2000);
         }
     }
 
