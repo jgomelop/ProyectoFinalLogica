@@ -67,7 +67,24 @@ var enemiesBullets = new Array();
 
 // Arreglo para guardar los temporizadores de disparo para cada enemigo  
 var intervals = new Array(); 
+function shootPlayer(enemy){
+    intervals.push( setInterval( () => {
+        const shootAngle= Math.atan2(player.y - enemy.y, player.x - enemy.x);
+        const v = 3; // rapidez bala enemiga
+        const vx = Math.cos(shootAngle)*v;
+        const vy = Math.sin(shootAngle)*v;
 
+        let bullet = new Projectile(enemyBulletImg,enemy.x,enemy.y,vx,vy);
+        bullet.xFinal = player.x;
+        bullet.yFinal = player.y;
+        // añadiendo imagen a la bala enemiga
+        bullet.img = enemyBulletImg;
+
+        // Agregando bala al array de las balas enemigas
+        enemiesBullets.push(bullet);
+    }, enemy.fireRate*1000)
+    )
+}
 // Lógica de spawn de enemigos
 var intervalEnemiesSpawn;
 function spawnEnemies(){
@@ -105,24 +122,6 @@ function spawnEnemies(){
     enemies.push(enemy); // añadiendo enemigo al array de enemigos
     
     // añadiendo tiempo de disparo al array de intervalos
-    function shootPlayer(enemy){
-        intervals.push( setInterval( () => {
-            const shootAngle= Math.atan2(player.y - enemy.y, player.x - enemy.x);
-            const v = 3; // rapidez bala enemiga
-            const vx = Math.cos(shootAngle)*v;
-            const vy = Math.sin(shootAngle)*v;
-
-            let bullet = new Projectile(enemyBulletImg,enemy.x,enemy.y,vx,vy);
-            bullet.xFinal = player.x;
-            bullet.yFinal = player.y;
-            // añadiendo imagen a la bala enemiga
-            bullet.img = enemyBulletImg;
-
-            // Agregando bala al array de las balas enemigas
-            enemiesBullets.push(bullet);
-        }, enemy.fireRate*1000)
-        )
-    }
     shootPlayer(enemy);
 }
 
@@ -137,6 +136,7 @@ function init ()
     function update() {
         ctx.clearRect(0,0,CANVAS_WIDTH,CANVAS_HEIGHT);
         ctx.resetTransform();
+        collisionChecker(enemies,playerBullets,intervals);
         drawAll();
     }
 
