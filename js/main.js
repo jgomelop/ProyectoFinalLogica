@@ -5,6 +5,10 @@ var ctx = canvas.getContext("2d");
 const CANVAS_WIDTH = canvas.width = 1000;
 const CANVAS_HEIGHT = canvas.height = 600;
 
+//Healt Bar
+var healthMenu= document.getElementById("healthmenu");
+let health = document.getElementById("health");
+
 // Definiciones para los menús
 var container = document.getElementById("container");
 var playButton = document.getElementById("play");
@@ -28,6 +32,7 @@ loseWindow.style.display="none";
 gameControls.style.display="none";
 gameReferences.style.display="none";
 pause.style.display="none";
+healthMenu.style.display="none";
 
 var animation;
 var mousePos;
@@ -330,6 +335,7 @@ function init ()
 
     playButton.onclick = function(){
         menu.style.display="none";
+        healthMenu.style.display="block";
         intervalEnemiesSpawn = setInterval( spawnEnemies, 2000);
         animate();
     }

@@ -12,13 +12,19 @@
 </head>
 <body id="body">
     <canvas id="canvas"></canvas>
+
 <div id= container>
+    <div id=healthmenu>
+        <h1 id=healthtitle>Health</h1>
+        <progress id="health" value="10" max="10"></progress>
+    </div>
+    
     <div class=divs1 id=menu>
         <h1 class= titles id=Logo>Space</h1>
         <h1 class= titles id=Logo2>Survival</h1>
         <button class=buttons id=play>Play</button>
         <button class=buttons id= controls>Controles</button>
-        <button class=buttons id= references>Referencias</button>
+        <button class=buttons id= references>Objetivo</button>
     </div>
 
     <div class=divs1  id=gamecontrols>
@@ -29,8 +35,15 @@
     </div>
 
     <div class=divs1  id=gamereferences>
-        <h1 class= titles id= title1>Referencias</h1>
-        <div id=textinstru></div>
+        <h1 class= titles id= title1>Objetivo</h1>
+        <div id=textinstru>
+            <p>
+                Destruya las naves enemigas sin ser impactado por las balas de estas
+                para evitar que la barra de vida llegue a 0 y perder el juego. Destruya la nave del jefe
+                para ganar el juego.
+
+            </p>
+        </div>
         <button class=buttons id=back2>Regresar</button>
     </div>
     
