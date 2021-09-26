@@ -156,6 +156,9 @@ function init ()
         ctx.resetTransform();
         collisionChecker(enemies,playerBullets,intervals);
         playerCollision(enemiesBullets, player);
+
+        movePlayer();
+        playerWallCollision(player.x, player.y);
         drawAll();
     }
 
@@ -225,9 +228,6 @@ function init ()
         animation = requestAnimationFrame(animate);
         
         update();
-        movePlayer();
-        playerWallCollision(player.x, player.y);
-
         if(player.lifePoints <= 0){
             clearInterval(intervalEnemiesSpawn);
             intervals = null;
