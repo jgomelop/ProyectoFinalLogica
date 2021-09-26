@@ -239,6 +239,7 @@ function init ()
             animation = cancelAnimationFrame(animate);
             ctx.clearRect(0,0,CANVAS_WIDTH,CANVAS_HEIGHT);
             loseWindow.style.display="block";
+            healthMenu.style.display = "none";
         }
     }
 
