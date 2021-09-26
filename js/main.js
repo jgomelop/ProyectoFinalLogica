@@ -11,13 +11,13 @@ var playButton = document.getElementById("play");
 var menu = document.getElementById("menu");
 var backButton1 = document.getElementById("back1")
 var backButton2 = document.getElementById("back2");
-var playAgain = document.getElementById("again"); //NO USE
-var winButton = document.getElementById("back3"); //NO USE 
+var playAgain = document.getElementById("again"); 
+var winButton = document.getElementById("back3");  
 var controls = document.getElementById("controls");
 var references = document.getElementById("references");
 var continueButton = document.getElementById("continue");
-var winWindow = document.getElementById("win"); //NO USE 
-var loseWindow = document.getElementById("lose"); //NO USE 
+var winWindow = document.getElementById("win"); 
+var loseWindow = document.getElementById("lose"); 
 var pause = document.getElementById("pause");
 var gameReferences = document.getElementById("gamereferences");
 var gameControls = document.getElementById("gamecontrols");
@@ -154,8 +154,6 @@ function init ()
     function update() {
         ctx.clearRect(0,0,CANVAS_WIDTH,CANVAS_HEIGHT);
         ctx.resetTransform();
-        //vanishBullets(playerBullets);
-        //vanishBullets(enemiesBullets);
         collisionChecker(enemies,playerBullets,intervals);
         playerCollision(enemiesBullets, player);
         drawAll();
@@ -225,12 +223,19 @@ function init ()
 
     function animate(){
         animation = requestAnimationFrame(animate);
+        
         update();
         movePlayer();
         playerWallCollision(player.x, player.y);
-    }
-    animate();
 
+        if(player.lifePoints <= 0){
+            clearInterval(intervalEnemiesSpawn);
+            intervals = null;
+            animation = cancelAnimationFrame(animate);
+            ctx.clearRect(0,0,CANVAS_WIDTH,CANVAS_HEIGHT);
+            loseWindow.style.display="block";
+        }
+    }
     // EVENT LISTENERS
     body.addEventListener('mousemove', mouseCoord);
     function mouseCoord(e){
@@ -290,20 +295,25 @@ function init ()
 
     body.onkeydown = function(e){
         if (e.keyCode===80 && pause.style.display=="none"){
-
+            window.cancelAnimationFrame(animation);
+            clearInterval(intervalEnemiesSpawn);
             pause.style.display="block";
         } else if(e.keyCode===80 && pause.style.display=="block"){
             pause.style.display="none";
+            animation = requestAnimationFrame(animate);
+            intervalEnemiesSpawn = setInterval( spawnEnemies, 2000);
         }
     }
 
     continueButton.onclick = function(){
         pause.style.display="none";
+        animation = requestAnimationFrame(animate);
+        intervalEnemiesSpawn = setInterval( spawnEnemies, 2000);
     }
 
     playAgain.onclick = function(){
-        loseWindow.style.display="none";
-        menu.style.display="block";
+        window.location.reload();
+
     }
     
     backButton1.onclick = function(){

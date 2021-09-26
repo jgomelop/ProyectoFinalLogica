@@ -39,25 +39,7 @@ function collisionChecker(ships, bullets,intervals){
             }
         }
     }
- }
-
- function vanishBullets(bullets){
-     for(let i=0; i < bullets.length; i++){
-        let bullet = bullets[i];
-        let bulletRadius = bullet.scale*bullet.img.width/2;
-
-        if(bullets[i].x + bulletRadius >= CANVAS_WIDTH){
-            bullets.splice(i,1);
-        } if(bullets[i].x - bulletRadius <=0){
-            bullets.splice(i,1);
-        } if(bullets[i].y + bulletRadius >= CANVAS_HEIGHT){
-            bullets.splice(i,1);
-        } if(bullets[i].y - bulletRadius <=0){
-            bullets.splice(i,1);
-        }
-
-     }
- }
+}
 
 function playerCollision(bullets, player){
 
@@ -88,10 +70,6 @@ function playerCollision(bullets, player){
 
         if(distance(player,bullet) < sumRadius){
             player.lifePoints -= bullet.dps;
-            if(player.lifePoints <= 0){
-                loseWindow.style.display="block";
-                /*body.cancelAnimationFrame(animate);*/
-            }
             bullets.splice(i,1);
         }else if(isBulletOutsideCanvas(bullet,bulletRadius)){
             bullets.splice(i,1);
