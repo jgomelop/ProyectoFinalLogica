@@ -85,6 +85,23 @@ function shootPlayer(enemy){
     }, enemy.fireRate*1000)
     )
 }
+
+function wallCollision(x,y){
+
+    let xPlayer = player.img.width/2;
+    let yPlayer = player.img.width/2;
+
+    if(x + xPlayer >= CANVAS_WIDTH){
+        player.x =  CANVAS_WIDTH - xPlayer
+    } if(x - xPlayer <=0){
+        player.x = xPlayer;
+    } if(y + yPlayer >= CANVAS_HEIGHT){
+        player.y =  CANVAS_HEIGHT - yPlayer;
+    } if(y - yPlayer  <=0){
+        player.y = yPlayer;
+    }
+}
+
 // Lógica de spawn de enemigos
 var intervalEnemiesSpawn;
 function spawnEnemies(){
@@ -206,6 +223,7 @@ function init ()
         animation = requestAnimationFrame(animate);
         update();
         movePlayer();
+        wallCollision(player.x, player.y);
     }
     animate();
 
