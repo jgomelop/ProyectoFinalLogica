@@ -301,9 +301,9 @@ function init ()
 
     body.onkeydown = function(e){
         if (e.keyCode===80 && pause.style.display=="none"){
-            pause.style.display="block";
             window.cancelAnimationFrame(animation);
-
+            clearInterval(intervalEnemiesSpawn);
+            pause.style.display="block";
         } else if(e.keyCode===80 && pause.style.display=="block"){
             pause.style.display="none";
             animation = requestAnimationFrame(animate);
@@ -313,8 +313,8 @@ function init ()
 
     continueButton.onclick = function(){
         pause.style.display="none";
-        window.requestAnimationFrame(animate);
-
+        animation = requestAnimationFrame(animate);
+        intervalEnemiesSpawn = setInterval( spawnEnemies, 2000);
     }
 
     playAgain.onclick = function(){

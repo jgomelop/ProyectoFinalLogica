@@ -64,13 +64,9 @@ function playerCollision(bullets, player){
 
         if(distance(player,bullet) < sumRadius){
             player.lifePoints -= bullet.dps;
-            health.value -= 1;
-            if(player.lifePoints <= 0){
-                ctx.clearRect(0,0,CANVAS_WIDTH,CANVAS_HEIGHT);
-                loseWindow.style.display="block";
-                player = undefined;
-                //window.cancelAnimationFrame(animate);
-            }
+            health.value -= bullet.dps;
+            bullets.splice(i,1);
+        } else if (isBulletOutsideCanvas(bullet,bulletRadius)){
             bullets.splice(i,1);
         }
     }
