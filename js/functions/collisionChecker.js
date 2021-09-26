@@ -7,6 +7,13 @@ function collisionChecker(ships, bullets,intervals){
         let d = Math.sqrt(dx2 + dy2);
         return d;
     }
+    function isBulletOutsideCanvas(bullet,bulletRadius){
+        let cond1 = bullet.x + bulletRadius >= CANVAS_WIDTH;
+        let cond2 = bullet.x - bulletRadius <= 0;
+        let cond3 = bullet.y + bulletRadius >= CANVAS_HEIGHT;
+        let cond4 = bullet.y - bulletRadius <= 0;
+        return cond1 || cond2 || cond3 || cond4;
+    }
 
     for(let i=0; i < ships.length; i++){
         let ship = ships[i];
@@ -17,18 +24,18 @@ function collisionChecker(ships, bullets,intervals){
             let bulletRadius = bullet.scale*bullet.img.width/2;
             let sumRadius = shipRadius + bulletRadius;
 
+            // Colision con la nave
             if(distance(ship,bullet) < sumRadius){
-                //clearInterval(intervalEnemiesSpawn);
                 ship.lifePoints -= bullet.dps;
                 bullets.splice(j,1);
                 if(ship.lifePoints <= 0){
                     ships.splice(i,1);
                     clearInterval(intervals[i]);
                     intervals.splice(i,1);
-                }
-               
+                } 
                 
-                //intervalEnemiesSpawn = setInterval(spawnEnemies, 1000);
+            } else if(isBulletOutsideCanvas(bullet,bulletRadius)){
+                bullets.splice(j,1);
             }
         }
     }
@@ -65,6 +72,14 @@ function playerCollision(bullets, player){
         return d;
     }
 
+    function isBulletOutsideCanvas(bullet,bulletRadius){
+        let cond1 = bullet.x + bulletRadius >= CANVAS_WIDTH;
+        let cond2 = bullet.x - bulletRadius <= 0;
+        let cond3 = bullet.y + bulletRadius >= CANVAS_HEIGHT;
+        let cond4 = bullet.y - bulletRadius <= 0;
+        return cond1 || cond2 || cond3 || cond4;
+    }
+
     for(let i=0; i < bullets.length; i++){
         
         let bullet = bullets[i];
@@ -78,7 +93,10 @@ function playerCollision(bullets, player){
                 /*body.cancelAnimationFrame(animate);*/
             }
             bullets.splice(i,1);
+        }else if(isBulletOutsideCanvas(bullet,bulletRadius)){
+            bullets.splice(i,1);
         }
     }
 
 }
+

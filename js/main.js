@@ -87,7 +87,7 @@ function shootPlayer(enemy){
     )
 }
 
-function wallCollision(x,y){
+function playerWallCollision(x,y){
 
     let xPlayer = player.scale*player.img.width/2;
     let yPlayer = player.scale*player.img.width/2;
@@ -154,8 +154,8 @@ function init ()
     function update() {
         ctx.clearRect(0,0,CANVAS_WIDTH,CANVAS_HEIGHT);
         ctx.resetTransform();
-        vanishBullets(playerBullets);
-        vanishBullets(enemiesBullets);
+        //vanishBullets(playerBullets);
+        //vanishBullets(enemiesBullets);
         collisionChecker(enemies,playerBullets,intervals);
         playerCollision(enemiesBullets, player);
         drawAll();
@@ -227,7 +227,7 @@ function init ()
         animation = requestAnimationFrame(animate);
         update();
         movePlayer();
-        wallCollision(player.x, player.y);
+        playerWallCollision(player.x, player.y);
     }
     animate();
 
