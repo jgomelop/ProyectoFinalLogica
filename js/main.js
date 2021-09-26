@@ -45,7 +45,7 @@ var keys = new Array(); // Array para las teclas.
 const playerImage = new Image();
 playerImage.src = 'js/resources/ships/player_ship.png';
 playerImage.onload = function(){};
-var player = new Ship(playerImage,CANVAS_WIDTH/2,CANVAS_HEIGHT/2,3/Math.SQRT2,3/Math.SQRT2);
+var player = new Ship(playerImage,CANVAS_WIDTH/2,CANVAS_HEIGHT/2,4,4);
 
 const playerBulletImg = new Image();
 playerBulletImg.src= 'js/resources/proyectiles/bala-jugador.png';
@@ -53,6 +53,23 @@ playerBulletImg.onload = function(){};
 
 // PROJECTILES
 var playerBullets = new Array();
+
+// colisión jugador con bordes
+function playerWallCollision(x,y){
+
+    let xPlayer = player.scale*player.img.width/2;
+    let yPlayer = player.scale*player.img.width/2;
+
+    if(x + xPlayer >= CANVAS_WIDTH){
+        player.x =  CANVAS_WIDTH - xPlayer
+    } if(x - xPlayer <=0){
+        player.x = xPlayer;
+    } if(y + yPlayer >= CANVAS_HEIGHT){
+        player.y =  CANVAS_HEIGHT - yPlayer;
+    } if(y - yPlayer  <=0){
+        player.y = yPlayer;
+    }
+}
 
 // ====================================================================== //
 // ENEMIGOS
@@ -72,49 +89,32 @@ var enemiesBullets = new Array();
 
 // Arreglo para guardar los temporizadores de disparo para cada enemigo  
 var intervals = new Array(); 
-function shootPlayer(enemy){
+function shootPlayer(enemy,DPS = 1){
     intervals.push( setInterval( () => {
         const shootAngle= Math.atan2(player.y - enemy.y, player.x - enemy.x);
-        const v = 3; // rapidez bala enemiga
+        const v = 6; // rapidez bala enemiga
         const vx = Math.cos(shootAngle)*v;
         const vy = Math.sin(shootAngle)*v;
 
         let bullet = new Projectile(enemyBulletImg,enemy.x,enemy.y,vx,vy);
         bullet.xFinal = player.x;
         bullet.yFinal = player.y;
-        bullet.dps=1;
+        bullet.dps = DPS;
         // añadiendo imagen a la bala enemiga
         bullet.img = enemyBulletImg;
 
         // Agregando bala al array de las balas enemigas
         enemiesBullets.push(bullet);
-    }, enemy.fireRate*1000)
+    }, 500)
     )
-}
-
-function playerWallCollision(x,y){
-
-    let xPlayer = player.scale*player.img.width/2;
-    let yPlayer = player.scale*player.img.width/2;
-
-    if(x + xPlayer >= CANVAS_WIDTH){
-        player.x =  CANVAS_WIDTH - xPlayer
-    } if(x - xPlayer <=0){
-        player.x = xPlayer;
-    } if(y + yPlayer >= CANVAS_HEIGHT){
-        player.y =  CANVAS_HEIGHT - yPlayer;
-    } if(y - yPlayer  <=0){
-        player.y = yPlayer;
-    }
 }
 
 // Lógica de spawn de enemigos
 var intervalEnemiesSpawn;
+function generateRandom(min, max) {
+    return Math.random() * (max - min) + min;
+}
 function spawnEnemies(){
-    function generateRandom(min, max) {
-        return Math.random() * (max - min) + min;
-    }
- 
     let diff = 50; // tamaño de img de enemigo básico.
     let dw = 1/5*CANVAS_WIDTH;
     let dh = 1/5*CANVAS_HEIGHT;
@@ -136,7 +136,7 @@ function spawnEnemies(){
     const r_magnitude= Math.sqrt(x_diff*x_diff + y_diff*y_diff);
     const x_dir = x_diff/r_magnitude;
     const y_dir = y_diff/r_magnitude;
-    const v = 2/Math.SQRT2; // Rapidez en una dimensión
+    const v = 4/Math.SQRT2; // Rapidez en una dimensión
     const vx = x_dir*v;
     const vy = y_dir*v;
 
@@ -148,7 +148,35 @@ function spawnEnemies(){
     shootPlayer(enemy);
 }
 
+// IMPLEMENTACIÓN DEL JEFE FINAL
+var playerGamePoints = 0; // Puntos internos para el estado del juego
+const MAX_GAME_POINTS_TO_BOSS = 2; // MÁX de puntos hasta aparición de jefe
+const bossImg = new Image();
+var timeoutBoss;
+bossImg.onload = function(){};
+bossImg.src = 'js/resources/ships/boss1.png';
 
+function spawnBoss(){
+    let diff = 50;
+    let x0 = CANVAS_WIDTH/2;
+    let y0 = 0 - diff;
+
+    let xf = x0;
+    let yf = CANVAS_HEIGHT/2; // Un poco más que la altura de la imagen del boss
+
+    let v0 = 2/Math.SQRT2;
+    let v0x = 0;
+    let v0y = v0;
+
+    let boss = new EnemyShip(bossImg,CANVAS_WIDTH/2,0,v0x,v0y,CANVAS_WIDTH/2,CANVAS_HEIGHT);
+    boss.lifePoints = 25;
+    boss.fireRate = 0.5;
+    boss.scale = 1;
+
+    shootPlayer(boss,3);
+    enemies.push(boss);
+
+}
 
 // ============================================================================= //
 // ============================= FUNCION PRINCIPAL ============================= //
@@ -172,11 +200,8 @@ function init ()
         // Dibujando nave del jugador
         if (mousePos){
             player.rotateShip(ctx,mousePos);
-            ctx.resetTransform();
-
         }else{
             player.drawShip(ctx);
-            ctx.resetTransform();
         }
 
         // Dibujando balas del jugador
@@ -184,7 +209,6 @@ function init ()
             for (let i = 0; i < playerBullets.length; i++){
                 let bullet = playerBullets[i];
                 if (bullet.isAlive){
-                    //ctx.setTransform(1,0,0,1,0,0);
                     ctx.globalCompositeOperation = 'destination-over';
                     bullet.drawBullet(ctx);
                     bullet.move();
@@ -231,8 +255,15 @@ function init ()
 
     function animate(){
         animation = requestAnimationFrame(animate);
-        
-        update();
+
+        if (playerGamePoints >= MAX_GAME_POINTS_TO_BOSS){
+            clearInterval(intervalEnemiesSpawn);
+            if ( enemies.length === 0){
+                ctx.resetTransform();
+                spawnBoss();
+            }
+        }
+
         if(player.lifePoints <= 0){
             clearInterval(intervalEnemiesSpawn);
             intervals = null;
@@ -240,6 +271,7 @@ function init ()
             ctx.clearRect(0,0,CANVAS_WIDTH,CANVAS_HEIGHT);
             loseWindow.style.display="block";
         }
+        update();
     }
 
     // EVENT LISTENERS
@@ -259,8 +291,9 @@ function init ()
         const Y0 = player.y;
         const X0 = player.x;
         const shootAngle= Math.atan2(mousePos.y - Y0, mousePos.x - X0);
-        const vx = Math.cos(shootAngle)*4;
-        const vy= Math.sin(shootAngle)*4;
+        const v = 6;
+        const vx = Math.cos(shootAngle)*v;
+        const vy= Math.sin(shootAngle)*v;
 
         let bullet = new Projectile(playerBulletImg,X0,Y0,vx,vy);
         bullet.xFinal = mousePos.x;
