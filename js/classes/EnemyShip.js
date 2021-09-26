@@ -8,6 +8,7 @@ class EnemyShip extends Point
     #isAlive;
     #scale;
     #img;
+    #dps;
     
     constructor(img,x,y,vx,vy,xFinal,yFinal)
     {
@@ -15,8 +16,9 @@ class EnemyShip extends Point
         this.#xFinal = xFinal;
         this.#yFinal = yFinal;
         this.#angle = 0;
-        this.#fireRate = 1;
-        this.#lifePoints = 20;
+        this.#fireRate = 2;
+        this.#dps = 1;
+        this.#lifePoints = 2;
         this.#isAlive = true;
         this.#img = img;
         this.#scale = .5;
@@ -74,6 +76,7 @@ class EnemyShip extends Point
     set scale(value){
         this.#scale = value;
     }
+
 
     move()
     {

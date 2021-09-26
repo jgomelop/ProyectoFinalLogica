@@ -5,6 +5,7 @@ class Projectile extends Point
     #img;
     #scale;
     #isAlive;
+    #dps
     constructor (img,x,y,vx,vy) 
     {    
         super(x,y,vx,vy)
@@ -13,8 +14,12 @@ class Projectile extends Point
         this.#img = img;
         this.#scale = 1;
         this.#isAlive = true;
+        this.#dps = 1;
     }
 
+    get dps(){
+        return this.#dps;
+    }
     get xFinal(){
         return this.#xFinal;
     }
@@ -28,6 +33,9 @@ class Projectile extends Point
         return this.#isAlive;
     }
 
+    set dps(value){
+        this.#dps = value;
+    }
     set xFinal(value){
         this.#xFinal = value;
     }

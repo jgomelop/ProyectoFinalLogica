@@ -7,13 +7,15 @@ class Ship extends Point
     #img;
     #scale;
     #cannonPosition;
+    #dps;
 
     constructor(img,x,y,vx,vy)
     {
         super(x,y,vx,vy);
         this.#angle = 0;
         this.#fireRate = 1;
-        this.#lifePoints = 20;
+        this.#dps = 1;
+        this.#lifePoints = 10;
         this.#isAlive = true;
         this.#img = img;
         this.#scale = .5;
