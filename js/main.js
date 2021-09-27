@@ -15,8 +15,8 @@ var playButton = document.getElementById("play");
 var menu = document.getElementById("menu");
 var backButton1 = document.getElementById("back1")
 var backButton2 = document.getElementById("back2");
-var playAgain = document.getElementById("again"); 
-var winButton = document.getElementById("back3");  
+var playAgain1 = document.getElementById("again1");
+var playAgain2 = document.getElementById("again2");
 var controls = document.getElementById("controls");
 var references = document.getElementById("references");
 var continueButton = document.getElementById("continue");
@@ -161,7 +161,7 @@ bossImg.src = 'js/resources/ships/boss1.png';
 function bossChangeDir(boss){
     const dirChangeTime = 3000; // en ms
     intervalBossDirChange = setInterval(() => {
-        boss.xFinal = generateRandom(1/4*CANVAS_WIDTH,3/4*CANVAS_WIDTH);
+        boss.xFinal = generateRandom(1/5*CANVAS_WIDTH,3/5*CANVAS_WIDTH);
         boss.yFinal = generateRandom(1/3*CANVAS_HEIGHT,2/3*CANVAS_HEIGHT); 
 
         const xDiff = boss.xFinal - boss.x;
@@ -383,8 +383,12 @@ function init ()
         intervalEnemiesSpawn = setInterval( spawnEnemies, 2000);
     }
 
-    playAgain.onclick = function(){
-        loseWindow.style.display="none";
+    playAgain1.onclick = function(){
+        //loseWindow.style.display="none";
+        window.location.reload()
+    }
+    playAgain2.onclick = function(){
+        //loseWindow.style.display="none";
         window.location.reload()
     }
     
