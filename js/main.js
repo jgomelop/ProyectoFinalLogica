@@ -15,8 +15,8 @@ var playButton = document.getElementById("play");
 var menu = document.getElementById("menu");
 var backButton1 = document.getElementById("back1")
 var backButton2 = document.getElementById("back2");
-var playAgain = document.getElementById("again"); 
-var winButton = document.getElementById("back3");  
+var playAgain1 = document.getElementById("again1");
+var playAgain2 = document.getElementById("again2");
 var controls = document.getElementById("controls");
 var references = document.getElementById("references");
 var continueButton = document.getElementById("continue");
@@ -45,7 +45,7 @@ var keys = new Array(); // Array para las teclas.
 const playerImage = new Image();
 playerImage.src = 'js/resources/ships/player_ship.png';
 playerImage.onload = function(){};
-var player = new Ship(playerImage,CANVAS_WIDTH/2,CANVAS_HEIGHT/2,3/Math.SQRT2,3/Math.SQRT2);
+var player = new Ship(playerImage,CANVAS_WIDTH/2,CANVAS_HEIGHT/2,4,4);
 
 const playerBulletImg = new Image();
 playerBulletImg.src= 'js/resources/proyectiles/bala-jugador.png';
@@ -53,6 +53,23 @@ playerBulletImg.onload = function(){};
 
 // PROJECTILES
 var playerBullets = new Array();
+
+// colisión jugador con bordes
+function playerWallCollision(x,y){
+
+    let xPlayer = player.scale*player.img.width/2;
+    let yPlayer = player.scale*player.img.width/2;
+
+    if(x + xPlayer >= CANVAS_WIDTH){
+        player.x =  CANVAS_WIDTH - xPlayer
+    } if(x - xPlayer <=0){
+        player.x = xPlayer;
+    } if(y + yPlayer >= CANVAS_HEIGHT){
+        player.y =  CANVAS_HEIGHT - yPlayer;
+    } if(y - yPlayer  <=0){
+        player.y = yPlayer;
+    }
+}
 
 // ====================================================================== //
 // ENEMIGOS
@@ -72,49 +89,33 @@ var enemiesBullets = new Array();
 
 // Arreglo para guardar los temporizadores de disparo para cada enemigo  
 var intervals = new Array(); 
-function shootPlayer(enemy){
+function shootPlayer(enemy,DPS = 1){
     intervals.push( setInterval( () => {
         const shootAngle= Math.atan2(player.y - enemy.y, player.x - enemy.x);
-        const v = 3; // rapidez bala enemiga
+        const v = 6; // rapidez bala enemiga
         const vx = Math.cos(shootAngle)*v;
         const vy = Math.sin(shootAngle)*v;
 
         let bullet = new Projectile(enemyBulletImg,enemy.x,enemy.y,vx,vy);
         bullet.xFinal = player.x;
         bullet.yFinal = player.y;
-        bullet.dps=1;
+        bullet.dps = DPS;
         // añadiendo imagen a la bala enemiga
         bullet.img = enemyBulletImg;
 
         // Agregando bala al array de las balas enemigas
         enemiesBullets.push(bullet);
-    }, enemy.fireRate*1000)
+    }, (1/enemy.fireRate)*1000)
     )
-}
-
-function playerWallCollision(x,y){
-
-    let xPlayer = player.scale*player.img.width/2;
-    let yPlayer = player.scale*player.img.width/2;
-
-    if(x + xPlayer >= CANVAS_WIDTH){
-        player.x =  CANVAS_WIDTH - xPlayer
-    } if(x - xPlayer <=0){
-        player.x = xPlayer;
-    } if(y + yPlayer >= CANVAS_HEIGHT){
-        player.y =  CANVAS_HEIGHT - yPlayer;
-    } if(y - yPlayer  <=0){
-        player.y = yPlayer;
-    }
 }
 
 // Lógica de spawn de enemigos
 var intervalEnemiesSpawn;
+function generateRandom(min, max) {
+    return Math.random() * (max - min) + min;
+}
+
 function spawnEnemies(){
-    function generateRandom(min, max) {
-        return Math.random() * (max - min) + min;
-    }
- 
     let diff = 50; // tamaño de img de enemigo básico.
     let dw = 1/5*CANVAS_WIDTH;
     let dh = 1/5*CANVAS_HEIGHT;
@@ -136,18 +137,65 @@ function spawnEnemies(){
     const r_magnitude= Math.sqrt(x_diff*x_diff + y_diff*y_diff);
     const x_dir = x_diff/r_magnitude;
     const y_dir = y_diff/r_magnitude;
-    const v = 2/Math.SQRT2; // Rapidez en una dimensión
+    const v = 4/Math.SQRT2; // Rapidez en una dimensión
     const vx = x_dir*v;
     const vy = y_dir*v;
 
     let enemy = new EnemyShip(basicEnemyImg,x0,y0,vx,vy,xf,yf);
     
+    shootPlayer(enemy);
     enemies.push(enemy); // añadiendo enemigo al array de enemigos
     
     // añadiendo tiempo de disparo al array de intervalos
-    shootPlayer(enemy);
 }
 
+// IMPLEMENTACIÓN DEL JEFE FINAL
+var playerGamePoints = 0; // Puntos internos para el estado del juego
+const MAX_GAME_POINTS_TO_BOSS = 2; // MÁX de puntos hasta aparición de jefe
+const bossImg = new Image();
+var gameFinalState = false;
+var intervalBossDirChange;
+bossImg.onload = function(){};
+bossImg.src = 'js/resources/ships/boss1.png';
+
+function bossChangeDir(boss){
+    const dirChangeTime = 3000; // en ms
+    intervalBossDirChange = setInterval(() => {
+        boss.xFinal = generateRandom(1/5*CANVAS_WIDTH,3/5*CANVAS_WIDTH);
+        boss.yFinal = generateRandom(1/3*CANVAS_HEIGHT,2/3*CANVAS_HEIGHT); 
+
+        const xDiff = boss.xFinal - boss.x;
+        const yDiff = boss.yFinal - boss.y;
+
+        const angle= Math.atan2(yDiff, xDiff);
+        const v = 5;
+
+        boss.vx = Math.cos(angle)*v;
+        boss.vy = Math.sin(angle)*v;
+    }, dirChangeTime);    
+}
+
+function spawnBoss(){
+    let diff = 50;
+    let x0 = CANVAS_WIDTH/2;
+    let y0 = 0 - diff;
+
+    let xf = x0;
+    let yf = CANVAS_HEIGHT/2; // Un poco más que la altura de la imagen del boss
+
+    let v0 = 2/Math.SQRT2;
+    let v0x = 0;
+    let v0y = v0;
+
+    let boss = new EnemyShip(bossImg,CANVAS_WIDTH/2,0,v0x,v0y,CANVAS_WIDTH/2,CANVAS_HEIGHT);
+    boss.lifePoints = 30;
+    boss.fireRate = 2;
+    boss.scale = 1;
+
+    shootPlayer(boss,3);
+    bossChangeDir(boss);
+    enemies.push(boss);
+}
 
 
 // ============================================================================= //
@@ -184,7 +232,6 @@ function init ()
             for (let i = 0; i < playerBullets.length; i++){
                 let bullet = playerBullets[i];
                 if (bullet.isAlive){
-                    //ctx.setTransform(1,0,0,1,0,0);
                     ctx.globalCompositeOperation = 'destination-over';
                     bullet.drawBullet(ctx);
                     bullet.move();
@@ -231,15 +278,34 @@ function init ()
 
     function animate(){
         animation = requestAnimationFrame(animate);
-        
-        update();
+
         if(player.lifePoints <= 0){
+            window.cancelAnimationFrame(animation);
             clearInterval(intervalEnemiesSpawn);
+            clearInterval(intervalBossDirChange);
             intervals = null;
-            animation = cancelAnimationFrame(animate);
             ctx.clearRect(0,0,CANVAS_WIDTH,CANVAS_HEIGHT);
+
             loseWindow.style.display="block";
             healthMenu.style.display = "none";
+        }else {
+            if (playerGamePoints >= MAX_GAME_POINTS_TO_BOSS){
+                clearInterval(intervalEnemiesSpawn);
+                if ( enemies.length === 0 && !gameFinalState){
+                    spawnBoss();
+                    gameFinalState = true;
+                } 
+                if (enemies.length === 0 && gameFinalState){
+                    window.cancelAnimationFrame(animation);
+                    clearInterval(intervalEnemiesSpawn);
+                    clearInterval(intervalBossDirChange);
+                    intervals = null;
+                    ctx.clearRect(0,0,CANVAS_WIDTH,CANVAS_HEIGHT);
+                    winWindow.style.display="block";
+                    healthMenu.style.display = "none";
+                }
+            }
+            update();
         }
     }
 
@@ -260,8 +326,9 @@ function init ()
         const Y0 = player.y;
         const X0 = player.x;
         const shootAngle= Math.atan2(mousePos.y - Y0, mousePos.x - X0);
-        const vx = Math.cos(shootAngle)*4;
-        const vy= Math.sin(shootAngle)*4;
+        const v = 6;
+        const vx = Math.cos(shootAngle)*v;
+        const vy= Math.sin(shootAngle)*v;
 
         let bullet = new Projectile(playerBulletImg,X0,Y0,vx,vy);
         bullet.xFinal = mousePos.x;
@@ -318,8 +385,12 @@ function init ()
         intervalEnemiesSpawn = setInterval( spawnEnemies, 2000);
     }
 
-    playAgain.onclick = function(){
-        loseWindow.style.display="none";
+    playAgain1.onclick = function(){
+        //loseWindow.style.display="none";
+        window.location.reload()
+    }
+    playAgain2.onclick = function(){
+        //loseWindow.style.display="none";
         window.location.reload()
     }
     

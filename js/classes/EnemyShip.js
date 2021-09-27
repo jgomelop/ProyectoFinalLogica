@@ -16,7 +16,7 @@ class EnemyShip extends Point
         this.#xFinal = xFinal;
         this.#yFinal = yFinal;
         this.#angle = 0;
-        this.#fireRate = 2;
+        this.#fireRate = 1;
         this.#dps = 1;
         this.#lifePoints = 2;
         this.#isAlive = true;
@@ -111,7 +111,7 @@ class EnemyShip extends Point
         ctx.rotate(Math.PI/2 + this.#angle);
         ctx.translate(-X0, -Y0);
         this.drawShip(ctx);
-        ctx.setTransform(1,0,0,1,0,0);
+        ctx.resetTransform();
     }
 
     shootPlayer(enemyBulletImg,player,enemiesBullets)

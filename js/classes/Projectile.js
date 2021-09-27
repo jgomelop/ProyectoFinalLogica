@@ -33,9 +33,14 @@ class Projectile extends Point
         return this.#isAlive;
     }
 
+    get dps (){
+        return this.#dps;
+    }
+
     set dps(value){
         this.#dps = value;
     }
+
     set xFinal(value){
         this.#xFinal = value;
     }
@@ -58,22 +63,6 @@ class Projectile extends Point
 
         ctx.drawImage(this.#img, drawX0, drawY0,IMG_WIDTH,IMG_HEIGHT); 
     }
-
-    /*move(){
-
-        let xDistance = Math.abs(super.x - this.#xFinal);
-        let yDistance = Math.abs(super.y - this.#yFinal);
-        let distanceToFinalPoint = Math.sqrt(xDistance*xDistance + yDistance*yDistance)
-        const DIFF_ERROR_RADIOUS = 10;
-
-        if (distanceToFinalPoint > DIFF_ERROR_RADIOUS) {
-            super.x += super.vx;
-            super.y += super.vy;
-        } else {
-            this.#isAlive = false;
-        }
-        
-    }*/
 
     move(){
         super.x = super.x + super.vx;

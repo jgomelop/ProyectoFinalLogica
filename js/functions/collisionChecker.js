@@ -34,6 +34,7 @@ function collisionChecker(ships, bullets,intervals){
                     ships.splice(i,1);
                     clearInterval(intervals[i]);
                     intervals.splice(i,1);
+                    playerGamePoints += 1;
                 } 
                 
             } else if(isBulletOutsideCanvas(bullet,bulletRadius)){
