@@ -24,7 +24,7 @@
     margin-left: 170px;
 }
 
-#healthmenu{
+.healthmenu1{
     background-color: rgba(0, 0, 0, .1);
     position: absolute;
     font-family: 'Press Start 2P', cursive;
@@ -34,8 +34,17 @@
     height: 55px;
     padding: 5px 5px;
     text-align: center;
+    margin-top: 5px;    
+}
+
+#healthmenu{
     margin-left: 5px;
-    margin-top: 5px;
+   
+}
+
+#healthmenuboss{
+    color: #CC3333;
+    margin-left: 851px;    
 }
 
 #healthtitle{
@@ -45,7 +54,7 @@
     user-select: none;
 }
 
-#health{
+.health{
     -webkit-appearance: none;
     appearance: none;
     margin-top: 5px;
@@ -56,12 +65,23 @@
     
 }
 
-#health::-webkit-progress-value{
+#health1::-webkit-progress-value{
     background-color: #4CAF50;
     border-radius: 10px;
 }
 
-#health::-webkit-progress-bar{
+#health1::-webkit-progress-bar{
+    background-color: #555555;
+    border-radius: 10px;
+    
+}
+
+#health2::-webkit-progress-value{
+    background-color: #CC3333;
+    border-radius: 10px;
+}
+
+#health2::-webkit-progress-bar{
     background-color: #555555;
     border-radius: 10px;
     
@@ -244,6 +264,37 @@
 #center1{
     margin-top: 65px;
     margin-bottom: 16px;
+    color:#CC3333;
+}
+
+#again1{
+    font-family: 'Press Start 2P', cursive;
+    cursor:pointer;
+    margin-bottom: 65px;
+    background-color: #CC3333;
+    border: none;
+    color: white;
+    padding: 15px 32px;
+    text-align: center;
+    text-decoration: none;
+    display: inline-block;
+    font-size: 10px;
+    border-radius: 4px;
+    -webkit-transition-duration: 0.4s; 
+    transition-duration: 0.4s;
+    color: white;
+}
+
+#again1 {
+    -webkit-transition-duration: 0.4s; 
+    transition-duration: 0.4s;
+}
+
+#again1:hover {
+    background-color: rgba(0, 0, 0, .1); 
+    color: #CC3333;
+    border: 2px solid #CC3333;
+    
 }
 
 #center2{
