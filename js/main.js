@@ -153,7 +153,7 @@ function spawnEnemies(){
 
 // IMPLEMENTACIÓN DEL JEFE FINAL
 var playerGamePoints = 0; // Puntos internos para el estado del juego
-const MAX_GAME_POINTS_TO_BOSS = 2; // MÁX de puntos hasta aparición de jefe
+const MAX_GAME_POINTS_TO_BOSS = 10; // MÁX de puntos hasta aparición de jefe
 const bossImg = new Image();
 var gameFinalState = false;
 var intervalBossDirChange;
