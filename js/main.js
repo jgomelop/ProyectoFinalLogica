@@ -114,6 +114,7 @@ var intervalEnemiesSpawn;
 function generateRandom(min, max) {
     return Math.random() * (max - min) + min;
 }
+
 function spawnEnemies(){
     let diff = 50; // tamaño de img de enemigo básico.
     let dw = 1/5*CANVAS_WIDTH;
@@ -152,9 +153,27 @@ function spawnEnemies(){
 var playerGamePoints = 0; // Puntos internos para el estado del juego
 const MAX_GAME_POINTS_TO_BOSS = 2; // MÁX de puntos hasta aparición de jefe
 const bossImg = new Image();
-var timeoutBoss;
+var gameFinalState = false;
+var intervalBossDirChange;
 bossImg.onload = function(){};
 bossImg.src = 'js/resources/ships/boss1.png';
+
+function bossChangeDir(boss){
+    const dirChangeTime = 3000; // en ms
+    intervalBossDirChange = setInterval(() => {
+        boss.xFinal = generateRandom(1/4*CANVAS_WIDTH,3/4*CANVAS_WIDTH);
+        boss.yFinal = generateRandom(1/3*CANVAS_HEIGHT,2/3*CANVAS_HEIGHT); 
+
+        const xDiff = boss.xFinal - boss.x;
+        const yDiff = boss.yFinal - boss.y;
+
+        const angle= Math.atan2(yDiff, xDiff);
+        const v = 5;
+
+        boss.vx = Math.cos(angle)*v;
+        boss.vy = Math.sin(angle)*v;
+    }, dirChangeTime);    
+}
 
 function spawnBoss(){
     let diff = 50;
@@ -174,9 +193,10 @@ function spawnBoss(){
     boss.scale = 1;
 
     shootPlayer(boss,3);
+    bossChangeDir(boss);
     enemies.push(boss);
-
 }
+
 
 // ============================================================================= //
 // ============================= FUNCION PRINCIPAL ============================= //
@@ -200,8 +220,11 @@ function init ()
         // Dibujando nave del jugador
         if (mousePos){
             player.rotateShip(ctx,mousePos);
+            ctx.resetTransform();
+
         }else{
             player.drawShip(ctx);
+            ctx.resetTransform();
         }
 
         // Dibujando balas del jugador
@@ -256,22 +279,32 @@ function init ()
     function animate(){
         animation = requestAnimationFrame(animate);
 
-        if (playerGamePoints >= MAX_GAME_POINTS_TO_BOSS){
-            clearInterval(intervalEnemiesSpawn);
-            if ( enemies.length === 0){
-                ctx.resetTransform();
-                spawnBoss();
-            }
-        }
-
         if(player.lifePoints <= 0){
+            window.cancelAnimationFrame(animation);
             clearInterval(intervalEnemiesSpawn);
+            clearInterval(intervalBossDirChange);
             intervals = null;
-            animation = cancelAnimationFrame(animate);
             ctx.clearRect(0,0,CANVAS_WIDTH,CANVAS_HEIGHT);
+
             loseWindow.style.display="block";
+        }else {
+            if (playerGamePoints >= MAX_GAME_POINTS_TO_BOSS){
+                clearInterval(intervalEnemiesSpawn);
+                if ( enemies.length === 0 && !gameFinalState){
+                    spawnBoss();
+                    gameFinalState = true;
+                } 
+                if (enemies.length === 0 && gameFinalState){
+                    window.cancelAnimationFrame(animation);
+                    clearInterval(intervalEnemiesSpawn);
+                    clearInterval(intervalBossDirChange);
+                    intervals = null;
+                    ctx.clearRect(0,0,CANVAS_WIDTH,CANVAS_HEIGHT);
+                    winWindow.style.display="block";
+                }
+            }
+            update();
         }
-        update();
     }
 
     // EVENT LISTENERS
