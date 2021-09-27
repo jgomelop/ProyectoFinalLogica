@@ -103,10 +103,10 @@ class EnemyShip extends Point
         ctx.drawImage(this.#img, drawX0, drawY0,IMG_WIDTH,IMG_HEIGHT); 
     }
 
-    rotateShip(ctx,mousePosition){
+    rotateShip(ctx,playerPosition){
         const X0 = super.x;
         const Y0 = super.y;
-        this.#angle = Math.atan2(mousePosition.y - Y0, mousePosition.x - X0);
+        this.#angle = Math.atan2(playerPosition.y - Y0, playerPosition.x - X0);
         ctx.translate(X0, Y0);
         ctx.rotate(Math.PI/2 + this.#angle);
         ctx.translate(-X0, -Y0);
