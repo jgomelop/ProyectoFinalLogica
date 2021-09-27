@@ -7,6 +7,7 @@
     background: url(../js/resources/backgrounds/space-1.jpg);
     background-repeat: no-repeat;
     background-size: cover;
+    cursor: url(http://www.rw-designer.com/cursor-extern.php?id=515), auto;
 }
 
 #canvas{
@@ -24,7 +25,7 @@
     margin-left: 170px;
 }
 
-#healthmenu{
+.healthmenu1{
     background-color: rgba(0, 0, 0, .1);
     position: absolute;
     font-family: 'Press Start 2P', cursive;
@@ -34,8 +35,17 @@
     height: 55px;
     padding: 5px 5px;
     text-align: center;
+    margin-top: 5px;    
+}
+
+#healthmenu{
     margin-left: 5px;
-    margin-top: 5px;
+   
+}
+
+#healthmenuboss{
+    color: #CC3333;
+    margin-left: 851px;    
 }
 
 #healthtitle{
@@ -45,7 +55,7 @@
     user-select: none;
 }
 
-#health{
+.health{
     -webkit-appearance: none;
     appearance: none;
     margin-top: 5px;
@@ -56,12 +66,23 @@
     
 }
 
-#health::-webkit-progress-value{
+#health1::-webkit-progress-value{
     background-color: #4CAF50;
     border-radius: 10px;
 }
 
-#health::-webkit-progress-bar{
+#health1::-webkit-progress-bar{
+    background-color: #555555;
+    border-radius: 10px;
+    
+}
+
+#health2::-webkit-progress-value{
+    background-color: #CC3333;
+    border-radius: 10px;
+}
+
+#health2::-webkit-progress-bar{
     background-color: #555555;
     border-radius: 10px;
     

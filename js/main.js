@@ -7,7 +7,8 @@ const CANVAS_HEIGHT = canvas.height = 600;
 
 //Healt Bar
 var healthMenu= document.getElementById("healthmenu");
-let health = document.getElementById("health");
+var healthMenuBoss = document.getElementById("healthmenuboss");
+let health = document.getElementById("health1");
 
 // Definiciones para los menús
 var container = document.getElementById("container");
@@ -33,6 +34,7 @@ gameControls.style.display="none";
 gameReferences.style.display="none";
 pause.style.display="none";
 healthMenu.style.display="none";
+healthMenuBoss.style.display="none";
 
 var animation;
 var mousePos;
@@ -293,10 +295,12 @@ function init ()
                 clearInterval(intervalEnemiesSpawn);
                 if ( enemies.length === 0 && !gameFinalState){
                     spawnBoss();
+                    healthMenuBoss.style.display="block";
                     gameFinalState = true;
                 } 
                 if (enemies.length === 0 && gameFinalState){
                     window.cancelAnimationFrame(animation);
+                    healthMenuBoss.style.display="none";
                     clearInterval(intervalEnemiesSpawn);
                     clearInterval(intervalBossDirChange);
                     intervals = null;

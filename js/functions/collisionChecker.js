@@ -30,6 +30,9 @@ function collisionChecker(ships, bullets,intervals){
             if(distance(ship,bullet) < sumRadius){
                 ship.lifePoints -= bullet.dps;
                 bullets.splice(j,1);
+                if(gameFinalState){
+                    health2.value -= bullet.dps;
+                }
                 if(ship.lifePoints <= 0){
                     ships.splice(i,1);
                     clearInterval(intervals[i]);
@@ -65,7 +68,7 @@ function playerCollision(bullets, player){
 
         if(distance(player,bullet) < sumRadius){
             player.lifePoints -= bullet.dps;
-            health.value -= bullet.dps;
+            health1.value -= bullet.dps;
             bullets.splice(i,1);
         } else if (isBulletOutsideCanvas(bullet,bulletRadius)){
             bullets.splice(i,1);
