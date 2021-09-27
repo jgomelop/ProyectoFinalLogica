@@ -176,18 +176,18 @@ function bossChangeDir(boss){
 }
 
 function spawnBoss(){
-    let diff = 50;
+    let diff = 120;
     let x0 = CANVAS_WIDTH/2;
     let y0 = 0 - diff;
 
     let xf = x0;
     let yf = CANVAS_HEIGHT/2; // Un poco más que la altura de la imagen del boss
 
-    let v0 = 2/Math.SQRT2;
+    let v0 = 6;
     let v0x = 0;
     let v0y = v0;
 
-    let boss = new EnemyShip(bossImg,CANVAS_WIDTH/2,0,v0x,v0y,CANVAS_WIDTH/2,CANVAS_HEIGHT);
+    let boss = new EnemyShip(bossImg,CANVAS_WIDTH/2,y0,v0x,v0y,xf,yf);
     boss.lifePoints = 30;
     boss.fireRate = 2;
     boss.scale = 1;

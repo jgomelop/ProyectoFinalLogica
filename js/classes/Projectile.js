@@ -68,14 +68,4 @@ class Projectile extends Point
         super.x = super.x + super.vx;
         super.y = super.y + super.vy;
     }
-
-    explode(canvasWidth, canvasHeight){
-        if ((Math.abs(super.x - this.#xFinal) == 0) && 
-            (Math.abs(super.y - this.#yFinal) == 0)){
-            this.#isAlive = false;
-        } 
-        else if ((super.x < 0 || super.x > canvasWidth) || (super.y < 0 || super.y > canvasHeight)){
-            this.#isAlive = false;
-        }
-    }
 }
