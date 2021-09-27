@@ -290,6 +290,8 @@ function init ()
 
             loseWindow.style.display="block";
             healthMenu.style.display = "none";
+            healthMenuBoss.style.display="none";
+
         }else {
             if (playerGamePoints >= MAX_GAME_POINTS_TO_BOSS){
                 clearInterval(intervalEnemiesSpawn);
